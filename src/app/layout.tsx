@@ -2,7 +2,6 @@ import type {Metadata} from 'next';
 import {Geist, Geist_Mono} from 'next/font/google';
 import './globals.css';
 import {Toaster} from '@/components/ui/toaster';
-import {ThemeToggle} from "@/components/theme-toggle";
 import {MainNav} from '@/components/main-nav';
 import Footer from '@/components/footer';
 
@@ -29,7 +28,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeToggle />
         
           <MainNav />
             {children}
@@ -40,3 +38,4 @@ export default function RootLayout({
     </html>
   );
 }
+

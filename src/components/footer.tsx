@@ -78,12 +78,11 @@ const Footer = () => {
             </p>
           </div>
         </div>
-      </div>
-      {/* Copyright */}
-      <div className="mt-12 text-center">
-        <p className="text-gray-500 text-sm">
-          © {new Date().getFullYear()} IrisMorphe. All Rights Reserved.
-        </p>
+        <div className="mt-12 text-center">
+          <p className="text-gray-500 text-sm">
+            © {new Date().getFullYear()} IrisMorphe. All Rights Reserved.
+          </p>
+        </div>
       </div>
     </footer>
   );
