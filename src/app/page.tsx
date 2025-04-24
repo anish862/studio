@@ -7,6 +7,8 @@ import {MainNav} from '@/components/main-nav';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {useEffect, useState} from 'react';
 import {Skeleton} from '@/components/ui/skeleton';
+import {useTheme} from 'next-themes';
+import {SunIcon, MoonIcon} from 'lucide-react';
 
 const testimonialData = [
   {
@@ -205,22 +207,24 @@ const StatsSection = () => {
 };
 
 export default function Home() {
+  const {theme, setTheme} = useTheme();
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <MainNav />
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <section className="relative w-full py-24 text-center animate-fade-in">
+      <main className="flex flex-col items-center justify-center w-full flex-1 text-center">
+        <section className="relative w-full text-center animate-fade-in">
           <div className="absolute inset-0 overflow-hidden rounded-lg shadow-md">
             <Image
               src="https://picsum.photos/1200/600"
               alt="Hero Image"
               width={1200}
               height={600}
-              className="object-cover w-full h-full transition-transform duration-500 hover:scale-105"
+              style={{objectFit: 'cover', width: '100%', height: '100%'}}
+              className="transition-transform duration-500 hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent opacity-50"></div>
           </div>
-          <div className="relative z-10">
+          <div className="relative z-10 p-8">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 drop-shadow-md">
               Ignite Your Digital Presence
             </h1>
@@ -240,6 +244,24 @@ export default function Home() {
 
         <TestimonialsSection />
       </main>
+      <div className="flex gap-2">
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => setTheme('light')}
+        >
+          <SunIcon className="mr-2 h-4 w-4" />
+          Light
+        </Button>
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => setTheme('dark')}
+        >
+          <MoonIcon className="mr-2 h-4 w-4" />
+          Dark
+        </Button>
+      </div>
 
       <footer className="w-full max-w-screen-xl bg-secondary py-8 px-4 md:px-8 lg:px-16 mt-12 rounded-tl-lg rounded-tr-lg shadow-md">
         <div className="container mx-auto text-center">
