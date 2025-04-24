@@ -60,7 +60,10 @@ const AboutPage = () => {
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {teamMembers.map((member) => (
-            <div key={member.id} className="transition-shadow duration-300 hover:shadow-lg animate-fade-in">
+            <div
+              key={member.id}
+              className="transition-shadow duration-300 hover:shadow-lg animate-slide-in"
+            >
               <div className="rounded-lg overflow-hidden shadow-md">
                 <Image
                   src={member.imageUrl}
