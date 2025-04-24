@@ -6,7 +6,6 @@ import {ArrowRight, LineChart, BarChart, PieChart, Code, TrendingUp, Search} fro
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {useEffect, useState} from 'react';
 import {Skeleton} from '@/components/ui/skeleton';
-import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const ServicesSection = ({services}: {services: any[]}) => {
   return (
@@ -162,15 +161,28 @@ const StatsSection = ({stats}: {stats: any[]}) => {
 };
 
 export default function Home() {
-  const {content, isLoading, error} = useDynamicContent('home-page');
-
-  if (isLoading) {
-    return <div>Loading...</div>; // Replace with a better loading state
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  const [content, setContent] = useState({
+    heroTitle: 'Ignite Your Digital Presence',
+    heroDescription: 'Crafting digital experiences that captivate and convert.',
+    heroImage: 'https://picsum.photos/1200/600',
+    services: [
+      {title: 'Web Development', description: 'Cutting-edge web solutions tailored to your unique business needs.'},
+      {title: 'Digital Marketing', description: 'Elevate your brand with our innovative digital marketing strategies.'},
+      {title: 'SEO Optimization', description: 'Drive organic growth and enhance your online visibility.'},
+    ],
+    stats: [
+      {title: 'Website Traffic', value: '10,000', trend: 'up', percentageChange: '20%'},
+      {title: 'Conversion Rate', value: '5%', trend: 'up', percentageChange: '15%'},
+      {title: 'Customer Engagement', value: '80%', trend: 'down', percentageChange: '5%'},
+    ],
+    testimonials: [
+      {name: 'John Doe', title: 'CEO of Company A', testimonial: 'Great service! Highly recommended.', imageUrl: 'https://picsum.photos/48/48'},
+      {name: 'Jane Smith', title: 'Marketing Manager', testimonial: 'Exceptional results!', imageUrl: 'https://picsum.photos/49/48'},
+      {name: 'Mike Johnson', title: 'Sales Director', testimonial: 'Transformed our business.', imageUrl: 'https://picsum.photos/50/48'},
+    ],
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">

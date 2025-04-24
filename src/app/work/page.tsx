@@ -3,20 +3,9 @@
 import React from 'react';
 import Image from 'next/image';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
-import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const WorkPage = () => {
-  const {content, isLoading, error} = useDynamicContent('work-page');
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const projects = content?.projects || [
+  const projects = [
     {
       id: 1,
       title: 'Project A - Tech Innovation',
@@ -58,9 +47,9 @@ const WorkPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="container mx-auto py-12 flex-grow">
-        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">{content?.title || 'Our Work'}</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">Our Work</h1>
         <p className="mb-8 text-lg text-gray-700 text-center animate-fade-in">
-          {content?.description || 'Showcasing our commitment to excellence and innovation in every project.'}
+          Showcasing our commitment to excellence and innovation in every project.
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (

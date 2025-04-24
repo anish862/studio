@@ -3,20 +3,9 @@
 import React from 'react';
 import Image from 'next/image';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
-import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const CareersPage = () => {
-  const {content, isLoading, error} = useDynamicContent('careers-page');
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const jobListings = content?.jobListings || [
+  const jobListings = [
     {
       id: 1,
       title: 'Senior Software Engineer',
@@ -64,9 +53,9 @@ const CareersPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="container mx-auto py-12 flex-grow">
-        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">{content?.title || 'Careers'}</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">Careers</h1>
         <p className="mb-8 text-lg text-gray-700 text-center animate-fade-in">
-          {content?.description || 'Join our team and help us build the future with your talent and passion.'}
+          Join our team and help us build the future with your talent and passion.
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {jobListings.map((job) => (

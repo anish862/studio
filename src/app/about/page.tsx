@@ -2,20 +2,9 @@
 
 import React from 'react';
 import Image from 'next/image';
-import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const AboutPage = () => {
-  const {content, isLoading, error} = useDynamicContent('about-page');
-
-  if (isLoading) {
-    return <div>Loading...</div>; // Replace with a better loading state
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const teamMembers = content?.teamMembers || [
+  const teamMembers = [
     {
       id: 1,
       name: 'Alice Johnson',
@@ -63,9 +52,9 @@ const AboutPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="container mx-auto py-12 flex-grow">
-        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">{content?.title || 'About Us'}</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">About Us</h1>
         <p className="mb-8 text-lg text-gray-700 text-center animate-fade-in">
-          {content?.description || 'Meet our team of experts dedicated to delivering exceptional digital solutions.'}
+          Meet our team of experts dedicated to delivering exceptional digital solutions.
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {teamMembers.map((member) => (

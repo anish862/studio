@@ -3,20 +3,9 @@
 import React from 'react';
 import Image from 'next/image';
 import {Card, CardContent, CardHeader, CardTitle, CardDescription} from '@/components/ui/card';
-import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const CaseStudiesPage = () => {
-  const {content, isLoading, error} = useDynamicContent('case-studies-page');
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const caseStudies = content?.caseStudies || [
+  const caseStudies = [
     {
       id: 1,
       title: 'Client A - Digital Transformation',
@@ -64,9 +53,9 @@ const CaseStudiesPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="container mx-auto py-12 flex-grow">
-        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">{content?.title || 'Case Studies'}</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">Case Studies</h1>
         <p className="mb-8 text-lg text-gray-700 text-center animate-fade-in">
-          {content?.description || 'Discover how we\'ve helped our clients achieve their goals with our expertise and innovative solutions.'}
+          Discover how we've helped our clients achieve their goals with our expertise and innovative solutions.
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {caseStudies.map((study) => (
