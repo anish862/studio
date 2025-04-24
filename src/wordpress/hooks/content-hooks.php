@@ -75,7 +75,8 @@ function irismorphe_get_page_data(WP_REST_Request $request) {
  * @return array The data for the home page.
  */
 function irismorphe_get_home_page_data() {
-    $page_id = get_page_by_path('home')->ID; // Assuming a page with slug 'home' exists
+    $page = get_page_by_path('home'); // Assuming a page with slug 'home' exists
+    $page_id = $page ? $page->ID : 0;
 
     if (!$page_id) {
         return array('error' => 'Home page not found');
