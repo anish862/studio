@@ -47,8 +47,8 @@ export const ContactForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
-      <div className="mb-4">
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+      <div className="mb-6">
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
           Name
         </label>
         <Input
@@ -56,12 +56,12 @@ export const ContactForm = () => {
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-1"
+          className="mt-1 rounded-md shadow-sm focus:ring-primary focus:border-primary"
           required
         />
       </div>
-      <div className="mb-4">
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+      <div className="mb-6">
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
           Email
         </label>
         <Input
@@ -69,25 +69,25 @@ export const ContactForm = () => {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mt-1"
+          className="mt-1 rounded-md shadow-sm focus:ring-primary focus:border-primary"
           required
         />
       </div>
-      <div className="mb-4">
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+      <div className="mb-6">
+        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
           Message
         </label>
         <Textarea
           id="message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="mt-1"
+          className="mt-1 rounded-md shadow-sm focus:ring-primary focus:border-primary"
           rows={5}
           required
         />
       </div>
       <div>
-        <Button type="submit">Send Message</Button>
+        <Button type="submit" className="w-full">Send Message</Button>
       </div>
     </form>
   );
