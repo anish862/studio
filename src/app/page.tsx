@@ -13,6 +13,7 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/compo
 import {useEffect, useState, useRef} from 'react';
 import {Skeleton} from '@/components/ui/skeleton';
 import {cn} from '@/lib/utils';
+import Link from 'next/link';
 
 const ServicesSection = ({services}: {services: any[]}) => {
   return (
@@ -233,6 +234,33 @@ const Slider = ({slides}: {slides: any[]}) => {
   );
 };
 
+const AboutUsSection = ({title, description, imageUrl}: {title: string, description: string, imageUrl: string}) => {
+  return (
+    <section className="mt-20 px-8 md:px-24 animate-fade-in">
+      <h2 className="text-3xl font-semibold mb-8 text-center">About Us</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <Image
+            src={imageUrl}
+            alt="About Us"
+            width={600}
+            height={400}
+            className="rounded-md shadow-md transition-transform duration-300 hover:scale-105"
+          />
+        </div>
+        <div className="flex flex-col justify-center">
+          <h3 className="text-2xl font-semibold mb-4">{title}</h3>
+          <p className="text-gray-600 mb-6">{description}</p>
+          <Link href="/about" className="text-primary hover:underline">
+            Read More
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+
 export default function Home() {
     const services = [
         {
@@ -302,6 +330,12 @@ export default function Home() {
         <section className="relative w-full text-center animate-fade-in">
           {slides && <Slider slides={slides} />}
         </section>
+
+        <AboutUsSection
+          title="About IrisMorphe"
+          description="We are a team of experts dedicated to delivering exceptional digital solutions. Learn more about our story and values."
+          imageUrl="https://picsum.photos/id/1015/600/400"
+        />
 
         {services && <ServicesSection services={services} />}
 
