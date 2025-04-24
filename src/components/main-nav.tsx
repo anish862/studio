@@ -9,7 +9,7 @@ import Link from 'next/link';
 import {cn} from '@/lib/utils';
 
 const siteConfig = {
-  name: 'AgencyFlow',
+  name: 'IrisMorphe',
   description: 'Your partner in digital success.',
   mainNav: [
     {
@@ -55,7 +55,7 @@ export function MainNav() {
     <div className="border-b">
       <div className="container flex h-16 items-center justify-between py-4">
         <Link href="/" className="mr-6 flex items-center space-x-2">
-          <span className="font-bold">{siteConfig.name}</span>
+          <span className="font-bold text-xl font-serif">{siteConfig.name}</span>
         </Link>
         <div className="hidden md:flex">
           <nav className="flex items-center space-x-6 text-sm font-medium">
@@ -82,7 +82,7 @@ export function MainNav() {
           <SheetContent side="left" className="sm:max-w-sm">
             <div className="grid gap-4 py-4">
               <Link href="/" className="mr-6 flex items-center space-x-2">
-                <span className="font-bold">{siteConfig.name}</span>
+                <span className="font-bold text-xl font-serif">{siteConfig.name}</span>
               </Link>
               <div className="grid gap-2">
                 {siteConfig.mainNav.map((item) => (
@@ -105,3 +105,4 @@ export function MainNav() {
     </div>
   );
 }
+
