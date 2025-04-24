@@ -1,11 +1,13 @@
 
 import Image from 'next/image';
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import {Button} from '@/components/ui/button';
+import {ArrowRight} from 'lucide-react';
+import {MainNav} from '@/components/main-nav';
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <MainNav />
       <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
         <section className="relative w-full py-24 text-center">
           <div className="absolute inset-0 overflow-hidden rounded-lg">
