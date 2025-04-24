@@ -1,9 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import {Button} from '@/components/ui/button';
 import {
-  ArrowRight,
   LineChart,
   BarChart,
   PieChart,
@@ -185,21 +183,35 @@ const Slider = ({slides}: {slides: any[]}) => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto relative">
+    <div className="relative w-full">
       {slides.map((slide, index) => (
         <div key={index} className={index === currentSlide ? 'block' : 'hidden'}>
-          <Image src={slide.url || 'https://picsum.photos/1200/600'} alt={`Slide ${index + 1}`} width={1200} height={600} style={{objectFit: 'cover', width: '100%', height: 'auto'}} className="rounded-md" />
+          <div className="relative">
+            <Image
+              src={slide.url || 'https://picsum.photos/1200/600'}
+              alt={`Slide ${index + 1}`}
+              width={1200}
+              height={600}
+              style={{objectFit: 'cover', width: '100%', height: 'auto'}}
+              className="rounded-md"
+            />
+            <div className="absolute top-0 left-0 w-full h-full flex items-center p-8">
+              <div className="bg-black bg-opacity-50 text-white p-6 rounded-md w-1/2">
+                <h2 className="text-3xl font-bold mb-4">{slide.title}</h2>
+                <p className="text-lg">{slide.description}</p>
+              </div>
+            </div>
+          </div>
         </div>
       ))}
-      <div className="absolute top-1/2 left-0 transform -translate-y-1/2 w-full flex justify-between items-center">
-        <Button onClick={goToPrevious} variant="ghost" className="p-2 rounded-full bg-secondary text-secondary-foreground">
-          <ArrowRight className="h-6 w-6 rotate-180" />
-          <span className="sr-only">Previous</span>
-        </Button>
-        <Button onClick={goToNext} variant="ghost" className="p-2 rounded-full bg-secondary text-secondary-foreground">
-          <ArrowRight className="h-6 w-6" />
-          <span className="sr-only">Next</span>
-        </Button>
+      <div className="absolute bottom-4 right-4 flex">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            className={`rounded-full w-3 h-3 mx-1 ${currentSlide === index ? 'bg-primary' : 'bg-gray-300'}`}
+            onClick={() => setCurrentSlide(index)}
+          />
+        ))}
       </div>
     </div>
   );
@@ -209,15 +221,18 @@ export default function Home() {
     const services = [
         {
             title: "Web Development",
-            description: "Cutting-edge web solutions tailored to your unique business needs."
+            description: "Cutting-edge web solutions tailored to your unique business needs.",
+            icon: Code
         },
         {
             title: "Digital Marketing",
-            description: "Elevate your brand with our innovative digital marketing strategies."
+            description: "Elevate your brand with our innovative digital marketing strategies.",
+            icon: TrendingUp
         },
         {
             title: "SEO Optimization",
-            description: "Drive organic growth and enhance your online visibility."
+            description: "Drive organic growth and enhance your online visibility.",
+            icon: Search
         }
     ];
 
@@ -258,11 +273,11 @@ export default function Home() {
     ];
 
     const slides = [
-        { url: "https://picsum.photos/1200/600" },
-        { url: "https://picsum.photos/1201/600" },
-        { url: "https://picsum.photos/1202/600" },
-        { url: "https://picsum.photos/1203/600" },
-        { url: "https://picsum.photos/1204/600" }
+        { url: "https://picsum.photos/1200/600", title: "Welcome to IrisMorphe", description: "Your partner in digital success" },
+        { url: "https://picsum.photos/1201/600", title: "Innovative Solutions", description: "We provide innovative solutions to help your business thrive in the digital age." },
+        { url: "https://picsum.photos/1202/600", title: "Expert Team", description: "Meet our team of experts dedicated to delivering exceptional digital solutions." },
+        { url: "https://picsum.photos/1203/600", title: "Cutting-Edge Technology", description: "We utilize the latest technologies to provide you with the best possible results." },
+        { url: "https://picsum.photos/1204/600", title: "Customer Satisfaction", description: "Your satisfaction is our top priority. We strive to exceed your expectations." }
     ];
 
   return (
