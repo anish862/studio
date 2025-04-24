@@ -1,10 +1,8 @@
-
 'use client';
 
 import Image from 'next/image';
 import {Button} from '@/components/ui/button';
 import {ArrowRight, LineChart, BarChart, PieChart} from 'lucide-react';
-import {MainNav} from '@/components/main-nav';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {useEffect, useState} from 'react';
 import {Skeleton} from '@/components/ui/skeleton';
@@ -208,7 +206,6 @@ const StatsSection = () => {
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <MainNav />
       <main className="flex flex-col items-center justify-center w-full flex-1 text-center">
         <section className="relative w-full text-center animate-fade-in">
           <div className="absolute inset-0 overflow-hidden rounded-lg shadow-md">
