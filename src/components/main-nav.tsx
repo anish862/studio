@@ -7,8 +7,6 @@ import {Menu} from 'lucide-react';
 import {usePathname} from 'next/navigation';
 import Link from 'next/link';
 import {cn} from '@/lib/utils';
-import {useTheme} from 'next-themes';
-import {SunIcon, MoonIcon} from 'lucide-react';
 
 const siteConfig = {
   name: 'IrisMorphe',
@@ -48,7 +46,6 @@ const siteConfig = {
 export function MainNav() {
   const [isMounted, setIsMounted] = useState(false);
   const pathname = usePathname();
-  const {theme, setTheme} = useTheme();
 
   useEffect(() => {
     setIsMounted(true);
@@ -58,7 +55,7 @@ export function MainNav() {
     <div className="border-b">
       <div className="container flex h-16 items-center justify-between py-4">
         <Link href="/" className="mr-6 flex items-center space-x-2">
-          <span className="font-bold text-xl font-serif">{siteConfig.name}</span>
+          <span className="font-bold text-xl font-serif">IrisMorphe</span>
         </Link>
         <div className="hidden md:flex">
           <nav className="flex items-center space-x-6 text-sm font-medium">
@@ -85,7 +82,7 @@ export function MainNav() {
           <SheetContent side="left" className="sm:max-w-sm">
             <div className="grid gap-4 py-4">
               <Link href="/" className="mr-6 flex items-center space-x-2">
-                <span className="font-bold text-xl font-serif">{siteConfig.name}</span>
+                <span className="font-bold text-xl font-serif">IrisMorphe</span>
               </Link>
               <div className="grid gap-2">
                 {siteConfig.mainNav.map((item) => (
@@ -102,27 +99,10 @@ export function MainNav() {
                 ))}
               </div>
             </div>
-            <div className="flex gap-2">
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => setTheme('light')}
-              >
-                <SunIcon className="mr-2 h-4 w-4" />
-                Light
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => setTheme('dark')}
-              >
-                <MoonIcon className="mr-2 h-4 w-4" />
-                Dark
-              </Button>
-            </div>
           </SheetContent>
         </Sheet>
       </div>
     </div>
   );
 }
+

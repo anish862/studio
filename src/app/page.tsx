@@ -7,8 +7,6 @@ import {MainNav} from '@/components/main-nav';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {useEffect, useState} from 'react';
 import {Skeleton} from '@/components/ui/skeleton';
-import {useTheme} from 'next-themes';
-import {SunIcon, MoonIcon} from 'lucide-react';
 
 const testimonialData = [
   {
@@ -207,7 +205,6 @@ const StatsSection = () => {
 };
 
 export default function Home() {
-  const {theme, setTheme} = useTheme();
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <MainNav />
@@ -244,24 +241,6 @@ export default function Home() {
 
         <TestimonialsSection />
       </main>
-      <div className="flex gap-2">
-        <Button
-          size="sm"
-          variant="ghost"
-          onClick={() => setTheme('light')}
-        >
-          <SunIcon className="mr-2 h-4 w-4" />
-          Light
-        </Button>
-        <Button
-          size="sm"
-          variant="ghost"
-          onClick={() => setTheme('dark')}
-        >
-          <MoonIcon className="mr-2 h-4 w-4" />
-          Dark
-        </Button>
-      </div>
 
       <footer className="w-full max-w-screen-xl bg-secondary py-8 px-4 md:px-8 lg:px-16 mt-12 rounded-tl-lg rounded-tr-lg shadow-md">
         <div className="container mx-auto text-center">
@@ -273,3 +252,4 @@ export default function Home() {
     </div>
   );
 }
+
