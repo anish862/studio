@@ -6,99 +6,34 @@ import {ArrowRight, LineChart, BarChart, PieChart, Code, TrendingUp, Search} fro
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {useEffect, useState} from 'react';
 import {Skeleton} from '@/components/ui/skeleton';
+import {useDynamicContent} from '@/hooks/useDynamicContent';
 
-const testimonialData = [
-  {
-    id: 1,
-    name: 'Alice Johnson',
-    title: 'CEO, Tech Innovations Inc.',
-    testimonial:
-      'AgencyFlow has completely transformed our digital strategy. Their expertise and innovative solutions have significantly boosted our online presence and revenue. Highly recommended!',
-    imageUrl: 'https://picsum.photos/id/237/100/100',
-  },
-  {
-    id: 2,
-    name: 'Bob Williams',
-    title: 'Marketing Director, Global Corp',
-    testimonial:
-      'The team at AgencyFlow is exceptional. Their data-driven approach and creative campaigns have delivered outstanding results. Weve seen a remarkable increase in customer engagement and brand awareness.',
-    imageUrl: 'https://picsum.photos/id/238/100/100',
-  },
-  {
-    id: 3,
-    name: 'Catherine Davis',
-    title: 'Founder, EcoLife Solutions',
-    testimonial:
-      'Working with AgencyFlow has been a game-changer for our business. Their personalized service and deep understanding of our industry have helped us achieve sustainable growth and build lasting customer relationships.',
-    imageUrl: 'https://picsum.photos/id/239/100/100',
-  },
-];
-
-const statsData = [
-  {
-    id: 1,
-    title: 'Website Traffic',
-    value: '3.2M',
-    trend: 'up',
-    percentageChange: '15%',
-    icon: LineChart,
-  },
-  {
-    id: 2,
-    title: 'Conversion Rate',
-    value: '4.8%',
-    trend: 'up',
-    percentageChange: '8%',
-    icon: BarChart,
-  },
-  {
-    id: 3,
-    title: 'Customer Engagement',
-    value: '2.5M',
-    trend: 'down',
-    percentageChange: '3%',
-    icon: PieChart,
-  },
-];
-
-const ServicesSection = () => {
+const ServicesSection = ({services}: {services: any[]}) => {
   return (
     <section className="mt-16 px-8 md:px-24 animate-fade-in">
       <h2 className="text-3xl font-semibold mb-6 text-center">Our Expertise</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div className="p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-          <div className="flex items-center mb-2">
-            <Code className="mr-2 h-5 w-5 text-primary" />
-            <h3 className="text-xl font-semibold">Web Development</h3>
+        {services.map((service) => (
+          <div
+            key={service.title}
+            className="p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+          >
+            <div className="flex items-center mb-2">
+              {/* Replace hardcoded icons with dynamic icons based on service type */}
+              {service.title === 'Web Development' && <Code className="mr-2 h-5 w-5 text-primary" />}
+              {service.title === 'Digital Marketing' && <TrendingUp className="mr-2 h-5 w-5 text-primary" />}
+              {service.title === 'SEO Optimization' && <Search className="mr-2 h-5 w-5 text-primary" />}
+              <h3 className="text-xl font-semibold">{service.title}</h3>
+            </div>
+            <p className="text-gray-600">{service.description}</p>
           </div>
-          <p className="text-gray-600">
-            Cutting-edge web solutions tailored to your unique business needs.
-          </p>
-        </div>
-        <div className="p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-          <div className="flex items-center mb-2">
-            <TrendingUp className="mr-2 h-5 w-5 text-primary" />
-            <h3 className="text-xl font-semibold">Digital Marketing</h3>
-          </div>
-          <p className="text-gray-600">
-            Elevate your brand with our innovative digital marketing strategies.
-          </p>
-        </div>
-        <div className="p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-          <div className="flex items-center mb-2">
-            <Search className="mr-2 h-5 w-5 text-primary" />
-            <h3 className="text-xl font-semibold">SEO Optimization</h3>
-          </div>
-          <p className="text-gray-600">
-            Drive organic growth and enhance your online visibility.
-          </p>
-        </div>
+        ))}
       </div>
     </section>
   );
 };
 
-const TestimonialsSection = () => {
+const TestimonialsSection = ({testimonials}: {testimonials: any[]}) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -114,8 +49,8 @@ const TestimonialsSection = () => {
         What Our Clients Say
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {testimonialData.map((testimonial) => (
-          <Card key={testimonial.id} className="relative">
+        {testimonials.map((testimonial) => (
+          <Card key={testimonial.name} className="relative">
             <CardHeader>
               <div className="flex items-center mb-4">
                 {isLoading ? (
@@ -164,7 +99,7 @@ const TestimonialsSection = () => {
   );
 };
 
-const StatsSection = () => {
+const StatsSection = ({stats}: {stats: any[]}) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -180,11 +115,25 @@ const StatsSection = () => {
         Key Performance Indicators
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {statsData.map((stat) => (
-          <Card key={stat.id} className="relative">
+        {stats.map((stat) => (
+          <Card key={stat.title} className="relative">
             <CardHeader>
               <CardTitle className="text-xl flex items-center">
-                {isLoading ? <Skeleton className="h-6 w-6 mr-2 rounded-full" /> : <stat.icon className="mr-2 h-6 w-6" />}
+                {isLoading ? (
+                  <Skeleton className="h-6 w-6 mr-2 rounded-full" />
+                ) : (
+                  // Replace hardcoded icons with dynamic icons based on stat type
+                  (() => {
+                    if (stat.title === 'Website Traffic') {
+                      return <LineChart className="mr-2 h-6 w-6" />;
+                    } else if (stat.title === 'Conversion Rate') {
+                      return <BarChart className="mr-2 h-6 w-6" />;
+                    } else if (stat.title === 'Customer Engagement') {
+                      return <PieChart className="mr-2 h-6 w-6" />;
+                    }
+                    return null; // Or a default icon
+                  })()
+                )}
                 {isLoading ? <Skeleton className="h-6 w-24" /> : stat.title}
               </CardTitle>
             </CardHeader>
@@ -213,13 +162,23 @@ const StatsSection = () => {
 };
 
 export default function Home() {
+  const {content, isLoading, error} = useDynamicContent('home-page');
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Replace with a better loading state
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <main className="flex flex-col items-center justify-center w-full flex-1 text-center">
         <section className="relative w-full text-center animate-fade-in">
           <div className="absolute inset-0 overflow-hidden rounded-lg shadow-md">
             <Image
-              src="https://picsum.photos/1200/600"
+              src={content?.heroImage || 'https://picsum.photos/1200/600'}
               alt="Hero Image"
               width={1200}
               height={600}
@@ -230,10 +189,10 @@ export default function Home() {
           </div>
           <div className="relative z-10 p-8">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 drop-shadow-md">
-              Ignite Your Digital Presence
+              {content?.heroTitle || 'Ignite Your Digital Presence'}
             </h1>
             <p className="text-md md:text-lg text-gray-200 mb-8 drop-shadow-md">
-              Crafting digital experiences that captivate and convert.
+              {content?.heroDescription || 'Crafting digital experiences that captivate and convert.'}
             </p>
             <Button size="lg" variant="default">
               Explore Our Solutions
@@ -242,13 +201,12 @@ export default function Home() {
           </div>
         </section>
 
-        <ServicesSection />
+        {content?.services && <ServicesSection services={content.services} />}
 
-        <StatsSection />
+        {content?.stats && <StatsSection stats={content.stats} />}
 
-        <TestimonialsSection />
+        {content?.testimonials && <TestimonialsSection testimonials={content.testimonials} />}
       </main>
     </div>
   );
 }
-

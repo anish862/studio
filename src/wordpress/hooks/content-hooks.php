@@ -70,57 +70,65 @@ function irismorphe_get_page_data(WP_REST_Request $request) {
 }
 
 /**
- * Retrieves the data for the home page.
+ * Retrieves the data for the home page using Advanced Custom Fields (ACF).
  *
  * @return array The data for the home page.
  */
 function irismorphe_get_home_page_data() {
-    return array(
-        'title'       => get_theme_mod('home_page_title', 'Ignite Your Digital Presence'),
-        'description' => get_theme_mod('home_page_description', 'Crafting digital experiences that captivate and convert.'),
-        'services'    => array(
-            array(
-                'title'       => get_theme_mod('home_service1_title', 'Web Development'),
-                'description' => get_theme_mod('home_service1_description', 'Cutting-edge web solutions tailored to your unique business needs.'),
-            ),
-            array(
-                'title'       => get_theme_mod('home_service2_title', 'Digital Marketing'),
-                'description' => get_theme_mod('home_service2_description', 'Elevate your brand with our innovative digital marketing strategies.'),
-            ),
-            array(
-                'title'       => get_theme_mod('home_service3_title', 'SEO Optimization'),
-                'description' => get_theme_mod('home_service3_description', 'Drive organic growth and enhance your online visibility.'),
-            ),
-        ),
-        'testimonials' => array(
-            array(
-                'name'      => get_theme_mod('home_testimonial1_name', 'Alice Johnson'),
-                'title'     => get_theme_mod('home_testimonial1_title', 'CEO, Tech Innovations Inc.'),
-                'testimonial' => get_theme_mod('home_testimonial1_testimonial', 'AgencyFlow has completely transformed our digital strategy. Their expertise and innovative solutions have significantly boosted our online presence and revenue. Highly recommended!'),
-                'imageUrl'  => 'https://picsum.photos/id/237/100/100',
-            ),
-            array(
-                'name'      => get_theme_mod('home_testimonial2_name', 'Bob Williams'),
-                'title'     => get_theme_mod('home_testimonial2_title', 'Marketing Director, Global Corp'),
-                'testimonial' => get_theme_mod('home_testimonial2_testimonial', 'The team at AgencyFlow is exceptional. Their data-driven approach and creative campaigns have delivered outstanding results. Weve seen a remarkable increase in customer engagement and brand awareness.'),
-                'imageUrl'  => 'https://picsum.photos/id/238/100/100',
-            ),
-        ),
-        'stats'      => array(
-            array(
-                'title'            => get_theme_mod('home_stat1_title', 'Website Traffic'),
-                'value'            => get_theme_mod('home_stat1_value', '3.2M'),
-                'trend'            => 'up',
-                'percentageChange' => '15%',
-            ),
-            array(
-                'title'            => get_theme_mod('home_stat2_title', 'Conversion Rate'),
-                'value'            => get_theme_mod('home_stat2_value', '4.8%'),
-                'trend'            => 'up',
-                'percentageChange' => '8%',
-            ),
-        ),
+    $page_id = get_page_by_path('home')->ID; // Assuming a page with slug 'home' exists
+
+    if (!$page_id) {
+        return array('error' => 'Home page not found');
+    }
+
+    $data = array(
+        'heroTitle'       => get_field('hero_title', $page_id),
+        'heroDescription' => get_field('hero_description', $page_id),
+        'heroImage'       => get_field('hero_image', $page_id)['url'], // Get image URL
+
+        'services'    => array(),
+        'testimonials' => array(),
+        'stats'      => array(),
     );
+
+    // Services Section
+    if (have_rows('services_section', $page_id)) {
+        while (have_rows('services_section', $page_id)) {
+            the_row();
+            $data['services'][] = array(
+                'title'       => get_sub_field('service_title'),
+                'description' => get_sub_field('service_description'),
+            );
+        }
+    }
+
+    // Testimonials Section
+    if (have_rows('testimonials_section', $page_id)) {
+        while (have_rows('testimonials_section', $page_id)) {
+            the_row();
+            $data['testimonials'][] = array(
+                'name'      => get_sub_field('testimonial_name'),
+                'title'     => get_sub_field('testimonial_title'),
+                'testimonial' => get_sub_field('testimonial_content'),
+                'imageUrl'  => get_sub_field('testimonial_image')['url'], // Get image URL
+            );
+        }
+    }
+
+    // Stats Section
+    if (have_rows('stats_section', $page_id)) {
+        while (have_rows('stats_section', $page_id)) {
+            the_row();
+            $data['stats'][] = array(
+                'title'            => get_sub_field('stat_title'),
+                'value'            => get_sub_field('stat_value'),
+                'trend'            => get_sub_field('stat_trend'),
+                'percentageChange' => get_sub_field('stat_percentage_change'),
+            );
+        }
+    }
+
+    return $data;
 }
 
 /**
