@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
+import {MainNav} from '@/components/main-nav';
 
 const WorkPage = () => {
   const projects = [
@@ -25,29 +26,32 @@ const WorkPage = () => {
   ];
 
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-2xl font-bold mb-4">Our Work</h1>
-      <p className="mb-4">
-        Check out some of our recent projects.
-      </p>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project) => (
-          <Card key={project.id}>
-            <CardHeader>
-              <CardTitle>{project.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Image
-                src={project.imageUrl}
-                alt={project.title}
-                width={400}
-                height={300}
-                className="mb-4 rounded-md"
-              />
-              {project.description}
-            </CardContent>
-          </Card>
-        ))}
+    <div>
+      <MainNav />
+      <div className="container mx-auto py-8">
+        <h1 className="text-2xl font-bold mb-4">Our Work</h1>
+        <p className="mb-4">
+          Check out some of our recent projects.
+        </p>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project) => (
+            <Card key={project.id}>
+              <CardHeader>
+                <CardTitle>{project.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Image
+                  src={project.imageUrl}
+                  alt={project.title}
+                  width={400}
+                  height={300}
+                  className="mb-4 rounded-md"
+                />
+                {project.description}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );

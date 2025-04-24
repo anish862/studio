@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card, CardContent, CardHeader, CardTitle, CardDescription} from '@/components/ui/card';
+import {MainNav} from '@/components/main-nav';
 
 const ServicesPage = () => {
   const services = [
@@ -24,23 +25,26 @@ const ServicesPage = () => {
   ];
 
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-2xl font-bold mb-4">Our Services</h1>
-      <p className="mb-4">
-        We offer a range of services to help your business succeed.
-      </p>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((service) => (
-          <Card key={service.id}>
-            <CardHeader>
-              <CardTitle>{service.title}</CardTitle>
-              <CardDescription>{service.price}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {service.description}
-            </CardContent>
-          </Card>
-        ))}
+    <div>
+      <MainNav />
+      <div className="container mx-auto py-8">
+        <h1 className="text-2xl font-bold mb-4">Our Services</h1>
+        <p className="mb-4">
+          We offer a range of services to help your business succeed.
+        </p>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {services.map((service) => (
+            <Card key={service.id}>
+              <CardHeader>
+                <CardTitle>{service.title}</CardTitle>
+                <CardDescription>{service.price}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {service.description}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
