@@ -2,10 +2,21 @@
 
 import Image from 'next/image';
 import {Button} from '@/components/ui/button';
-import {ArrowRight, LineChart, BarChart, PieChart, Code, TrendingUp, Search} from 'lucide-react';
+import {
+  ArrowRight,
+  LineChart,
+  BarChart,
+  PieChart,
+  Code,
+  TrendingUp,
+  Search,
+} from 'lucide-react';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {useEffect, useState} from 'react';
 import {Skeleton} from '@/components/ui/skeleton';
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from '@/components/ui/carousel';
+import {useWordPress} from '@/hooks/useWordPress';
+import {cn} from '@/lib/utils';
 
 const ServicesSection = ({services}: {services: any[]}) => {
   return (
@@ -161,56 +172,52 @@ const StatsSection = ({stats}: {stats: any[]}) => {
 };
 
 export default function Home() {
-  const [content, setContent] = useState({
-    heroTitle: 'Ignite Your Digital Presence',
-    heroDescription: 'Crafting digital experiences that captivate and convert.',
-    heroImage: 'https://picsum.photos/1200/600',
-    services: [
-      {title: 'Web Development', description: 'Cutting-edge web solutions tailored to your unique business needs.'},
-      {title: 'Digital Marketing', description: 'Elevate your brand with our innovative digital marketing strategies.'},
-      {title: 'SEO Optimization', description: 'Drive organic growth and enhance your online visibility.'},
-    ],
-    stats: [
-      {title: 'Website Traffic', value: '10,000', trend: 'up', percentageChange: '20%'},
-      {title: 'Conversion Rate', value: '5%', trend: 'up', percentageChange: '15%'},
-      {title: 'Customer Engagement', value: '80%', trend: 'down', percentageChange: '5%'},
-    ],
-    testimonials: [
-      {name: 'John Doe', title: 'CEO of Company A', testimonial: 'Great service! Highly recommended.', imageUrl: 'https://picsum.photos/48/48'},
-      {name: 'Jane Smith', title: 'Marketing Manager', testimonial: 'Exceptional results!', imageUrl: 'https://picsum.photos/49/48'},
-      {name: 'Mike Johnson', title: 'Sales Director', testimonial: 'Transformed our business.', imageUrl: 'https://picsum.photos/50/48'},
-    ],
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const {content, isLoading, error} = useWordPress('home-page');
+  const [index, setIndex] = React.useState(0);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <main className="flex flex-col items-center justify-center w-full flex-1 text-center">
         <section className="relative w-full text-center animate-fade-in">
-          <div className="absolute inset-0 overflow-hidden rounded-lg shadow-md">
-            <Image
-              src={content?.heroImage || 'https://picsum.photos/1200/600'}
-              alt="Hero Image"
-              width={1200}
-              height={600}
-              style={{objectFit: 'cover', width: '100%', height: '100%'}}
-              className="transition-transform duration-500 hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent opacity-50"></div>
-          </div>
-          <div className="relative z-10 p-8">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 drop-shadow-md">
-              {content?.heroTitle || 'Ignite Your Digital Presence'}
-            </h1>
-            <p className="text-md md:text-lg text-gray-200 mb-8 drop-shadow-md">
-              {content?.heroDescription || 'Crafting digital experiences that captivate and convert.'}
-            </p>
-            <Button size="lg" variant="default">
-              Explore Our Solutions
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </div>
+          <Carousel
+            opts={{
+              align: 'start',
+            }}
+            className="w-full max-w-5xl"
+          >
+            <CarouselContent className="overflow-hidden">
+              {content?.sliderImages?.map((slide, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <div className="p-1">
+                    <Card className="border-none shadow-none">
+                      <div className="relative">
+                        <Image
+                          src={slide.url || 'https://picsum.photos/1200/600'}
+                          alt={`Slide ${index + 1}`}
+                          width={1200}
+                          height={600}
+                          style={{objectFit: 'cover', width: '100%', height: 'auto'}}
+                          className="transition-transform duration-500 hover:scale-105 rounded-md"
+                        />
+                      </div>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex items-center justify-center space-x-4 py-4">
+              <CarouselPrevious className="bg-secondary text-secondary-foreground rounded-full p-2" />
+              <CarouselNext className="bg-secondary text-secondary-foreground rounded-full p-2" />
+            </div>
+          </Carousel>
         </section>
 
         {content?.services && <ServicesSection services={content.services} />}
