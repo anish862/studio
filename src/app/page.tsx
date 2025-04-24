@@ -10,7 +10,7 @@ import {
   Search,
 } from 'lucide-react';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import {Skeleton} from '@/components/ui/skeleton';
 import {cn} from '@/lib/utils';
 
@@ -169,6 +169,22 @@ const StatsSection = ({stats}: {stats: any[]}) => {
 
 const Slider = ({slides}: {slides: any[]}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const timerRef = useRef<number>(null); // Use a ref to hold the timer ID
+
+  useEffect(() => {
+    // Clear any existing timer
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    // Set up the timer to advance the slide every 5 seconds
+    timerRef.current = window.setTimeout(() => {
+      goToNext();
+    }, 5000);
+
+    // Clear the timer when the component unmounts
+    return () => clearTimeout(timerRef.current);
+  }, [currentSlide]); // Effect runs when the currentSlide changes
 
   const goToPrevious = () => {
     const isFirstSlide = currentSlide === 0;
@@ -193,7 +209,7 @@ const Slider = ({slides}: {slides: any[]}) => {
               width={1200}
               height={600}
               style={{objectFit: 'cover', width: '100%', height: 'auto'}}
-              className="rounded-md"
+              className="rounded-md animate-fade-in" // Add animate-fade-in for a smooth transition
             />
             <div className="absolute top-0 left-0 w-full h-full flex items-center p-8">
               <div className="bg-black bg-opacity-50 text-white p-6 rounded-md w-1/2">
