@@ -14,8 +14,6 @@ import {
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {useEffect, useState} from 'react';
 import {Skeleton} from '@/components/ui/skeleton';
-import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from '@/components/ui/carousel';
-import {useWordPress} from '@/hooks/useWordPress';
 import {cn} from '@/lib/utils';
 
 const ServicesSection = ({services}: {services: any[]}) => {
@@ -171,60 +169,114 @@ const StatsSection = ({stats}: {stats: any[]}) => {
   );
 };
 
+const Slider = ({slides}: {slides: any[]}) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const goToPrevious = () => {
+    const isFirstSlide = currentSlide === 0;
+    const newIndex = isFirstSlide ? slides.length - 1 : currentSlide - 1;
+    setCurrentSlide(newIndex);
+  };
+
+  const goToNext = () => {
+    const isLastSlide = currentSlide === slides.length - 1;
+    const newIndex = isLastSlide ? 0 : currentSlide + 1;
+    setCurrentSlide(newIndex);
+  };
+
+  return (
+    <div className="max-w-5xl mx-auto relative">
+      {slides.map((slide, index) => (
+        <div key={index} className={index === currentSlide ? 'block' : 'hidden'}>
+          <Image src={slide.url || 'https://picsum.photos/1200/600'} alt={`Slide ${index + 1}`} width={1200} height={600} style={{objectFit: 'cover', width: '100%', height: 'auto'}} className="rounded-md" />
+        </div>
+      ))}
+      <div className="absolute top-1/2 left-0 transform -translate-y-1/2 w-full flex justify-between items-center">
+        <Button onClick={goToPrevious} variant="ghost" className="p-2 rounded-full bg-secondary text-secondary-foreground">
+          <ArrowRight className="h-6 w-6 rotate-180" />
+          <span className="sr-only">Previous</span>
+        </Button>
+        <Button onClick={goToNext} variant="ghost" className="p-2 rounded-full bg-secondary text-secondary-foreground">
+          <ArrowRight className="h-6 w-6" />
+          <span className="sr-only">Next</span>
+        </Button>
+      </div>
+    </div>
+  );
+};
+
 export default function Home() {
-  const {content, isLoading, error} = useWordPress('home-page');
-  const [index, setIndex] = React.useState(0);
+    const services = [
+        {
+            title: "Web Development",
+            description: "Cutting-edge web solutions tailored to your unique business needs."
+        },
+        {
+            title: "Digital Marketing",
+            description: "Elevate your brand with our innovative digital marketing strategies."
+        },
+        {
+            title: "SEO Optimization",
+            description: "Drive organic growth and enhance your online visibility."
+        }
+    ];
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+    const testimonials = [
+        {
+            name: "John Doe",
+            title: "CEO, Acme Corp",
+            testimonial: "Irismorphe has transformed our online presence. Their expertise is unmatched!",
+            imageUrl: "https://picsum.photos/id/237/48/48"
+        },
+        {
+            name: "Jane Smith",
+            title: "Marketing Director, Beta Co",
+            testimonial: "We've seen a significant increase in engagement thanks to Irismorphe's strategies.",
+            imageUrl: "https://picsum.photos/id/238/48/48"
+        }
+    ];
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+    const stats = [
+        {
+            title: "Website Traffic",
+            value: "150%",
+            trend: "up",
+            percentageChange: "+35%"
+        },
+        {
+            title: "Conversion Rate",
+            value: "85%",
+            trend: "up",
+            percentageChange: "+15%"
+        },
+        {
+            title: "Customer Engagement",
+            value: "92%",
+            trend: "up",
+            percentageChange: "+22%"
+        }
+    ];
+
+    const slides = [
+        { url: "https://picsum.photos/1200/600" },
+        { url: "https://picsum.photos/1201/600" },
+        { url: "https://picsum.photos/1202/600" },
+        { url: "https://picsum.photos/1203/600" },
+        { url: "https://picsum.photos/1204/600" }
+    ];
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <main className="flex flex-col items-center justify-center w-full flex-1 text-center">
         <section className="relative w-full text-center animate-fade-in">
-          <Carousel
-            opts={{
-              align: 'start',
-            }}
-            className="w-full max-w-5xl"
-          >
-            <CarouselContent className="overflow-hidden">
-              {content?.sliderImages?.map((slide, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1">
-                    <Card className="border-none shadow-none">
-                      <div className="relative">
-                        <Image
-                          src={slide.url || 'https://picsum.photos/1200/600'}
-                          alt={`Slide ${index + 1}`}
-                          width={1200}
-                          height={600}
-                          style={{objectFit: 'cover', width: '100%', height: 'auto'}}
-                          className="transition-transform duration-500 hover:scale-105 rounded-md"
-                        />
-                      </div>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="flex items-center justify-center space-x-4 py-4">
-              <CarouselPrevious className="bg-secondary text-secondary-foreground rounded-full p-2" />
-              <CarouselNext className="bg-secondary text-secondary-foreground rounded-full p-2" />
-            </div>
-          </Carousel>
+          {slides && <Slider slides={slides} />}
         </section>
 
-        {content?.services && <ServicesSection services={content.services} />}
+        {services && <ServicesSection services={services} />}
 
-        {content?.stats && <StatsSection stats={content.stats} />}
+        {stats && <StatsSection stats={stats} />}
 
-        {content?.testimonials && <TestimonialsSection testimonials={content.testimonials} />}
+        {testimonials && <TestimonialsSection testimonials={testimonials} />}
       </main>
     </div>
   );
