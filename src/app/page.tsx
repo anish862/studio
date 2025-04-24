@@ -228,7 +228,7 @@ export default function Home() {
             <p className="text-md md:text-lg text-gray-200 mb-8 drop-shadow-md">
               Crafting digital experiences that captivate and convert.
             </p>
-            <Button size="lg" variant="accent">
+            <Button size="lg" variant="default">
               Explore Our Solutions
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
