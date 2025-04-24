@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -20,7 +21,7 @@ const CareersPage = () => {
       description: 'Lead our marketing efforts and drive growth with creative and strategic campaigns that resonate with our audience.',
       location: 'New York, NY',
       imageUrl: 'https://picsum.photos/401/220',
-    },
+      },
     {
       id: 3,
       title: 'Data Scientist',
@@ -80,15 +81,9 @@ const CareersPage = () => {
           ))}
         </div>
       </div>
-      <footer className="w-full max-w-screen-xl bg-secondary py-8 px-4 md:px-8 lg:px-16 mt-12 rounded-tl-lg rounded-tr-lg shadow-md">
-        <div className="container mx-auto text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} AgencyFlow. All Rights Reserved.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };
 
 export default CareersPage;
+

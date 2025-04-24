@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -241,14 +242,6 @@ export default function Home() {
 
         <TestimonialsSection />
       </main>
-
-      <footer className="w-full max-w-screen-xl bg-secondary py-8 px-4 md:px-8 lg:px-16 mt-12 rounded-tl-lg rounded-tr-lg shadow-md">
-        <div className="container mx-auto text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} AgencyFlow. All Rights Reserved.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
