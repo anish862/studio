@@ -49,13 +49,13 @@ const WorkPage = () => {
     <div className="min-h-screen flex flex-col">
       <MainNav />
       <div className="container mx-auto py-12 flex-grow">
-        <h1 className="text-3xl font-bold mb-8 text-center">Our Work</h1>
-        <p className="mb-8 text-lg text-gray-700 text-center">
+        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">Our Work</h1>
+        <p className="mb-8 text-lg text-gray-700 text-center animate-fade-in">
           Showcasing our commitment to excellence and innovation in every project.
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
-            <Card key={project.id} className="transition-shadow duration-300 hover:shadow-lg">
+            <Card key={project.id} className="transition-shadow duration-300 hover:shadow-lg animate-fade-in">
               <CardHeader>
                 <CardTitle className="text-xl">{project.title}</CardTitle>
               </CardHeader>

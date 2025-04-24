@@ -55,13 +55,13 @@ const ServicesPage = () => {
     <div className="min-h-screen flex flex-col">
       <MainNav />
       <div className="container mx-auto py-12 flex-grow">
-        <h1 className="text-3xl font-bold mb-8 text-center">Our Services</h1>
-        <p className="mb-8 text-lg text-gray-700 text-center">
+        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">Our Services</h1>
+        <p className="mb-8 text-lg text-gray-700 text-center animate-fade-in">
           Empowering your business with innovative solutions and expertise.
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
-            <Card key={service.id} className="transition-shadow duration-300 hover:shadow-lg">
+            <Card key={service.id} className="transition-shadow duration-300 hover:shadow-lg animate-fade-in">
               <CardHeader>
                 <CardTitle className="text-xl">{service.title}</CardTitle>
                 <CardDescription className="text-gray-500">{service.price}</CardDescription>

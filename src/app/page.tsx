@@ -64,7 +64,7 @@ const statsData = [
 
 const ServicesSection = () => {
   return (
-    <section className="mt-16 px-8 md:px-24">
+    <section className="mt-16 px-8 md:px-24 animate-fade-in">
       <h2 className="text-3xl font-semibold mb-6 text-center">Our Expertise</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div className="p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
@@ -101,7 +101,7 @@ const TestimonialsSection = () => {
   }, []);
 
   return (
-    <section className="mt-20 px-8 md:px-24">
+    <section className="mt-20 px-8 md:px-24 animate-fade-in">
       <h2 className="text-3xl font-semibold mb-8 text-center">
         What Our Clients Say
       </h2>
@@ -167,7 +167,7 @@ const StatsSection = () => {
   }, []);
 
   return (
-    <section className="mt-20 px-8 md:px-24">
+    <section className="mt-20 px-8 md:px-24 animate-fade-in">
       <h2 className="text-3xl font-semibold mb-8 text-center">
         Key Performance Indicators
       </h2>
@@ -209,7 +209,7 @@ export default function Home() {
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <MainNav />
       <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <section className="relative w-full py-24 text-center">
+        <section className="relative w-full py-24 text-center animate-fade-in">
           <div className="absolute inset-0 overflow-hidden rounded-lg shadow-md">
             <Image
               src="https://picsum.photos/1200/600"
@@ -251,4 +251,3 @@ export default function Home() {
     </div>
   );
 }
-

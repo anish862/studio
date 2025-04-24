@@ -55,13 +55,13 @@ const CaseStudiesPage = () => {
     <div className="min-h-screen flex flex-col">
       <MainNav />
       <div className="container mx-auto py-12 flex-grow">
-        <h1 className="text-3xl font-bold mb-8 text-center">Case Studies</h1>
-        <p className="mb-8 text-lg text-gray-700 text-center">
+        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">Case Studies</h1>
+        <p className="mb-8 text-lg text-gray-700 text-center animate-fade-in">
           Discover how we've helped our clients achieve their goals with our expertise and innovative solutions.
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {caseStudies.map((study) => (
-            <Card key={study.id} className="transition-shadow duration-300 hover:shadow-lg">
+            <Card key={study.id} className="transition-shadow duration-300 hover:shadow-lg animate-fade-in">
               <CardHeader>
                 <CardTitle className="text-xl">{study.title}</CardTitle>
                 <CardDescription className="text-gray-500">{study.industry}</CardDescription>

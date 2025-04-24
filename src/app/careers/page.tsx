@@ -55,13 +55,13 @@ const CareersPage = () => {
     <div className="min-h-screen flex flex-col">
       <MainNav />
       <div className="container mx-auto py-12 flex-grow">
-        <h1 className="text-3xl font-bold mb-8 text-center">Careers</h1>
-        <p className="mb-8 text-lg text-gray-700 text-center">
+        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">Careers</h1>
+        <p className="mb-8 text-lg text-gray-700 text-center animate-fade-in">
           Join our team and help us build the future with your talent and passion.
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {jobListings.map((job) => (
-            <Card key={job.id} className="transition-shadow duration-300 hover:shadow-lg">
+            <Card key={job.id} className="transition-shadow duration-300 hover:shadow-lg animate-fade-in">
               <CardHeader>
                 <CardTitle className="text-xl">{job.title}</CardTitle>
               </CardHeader>

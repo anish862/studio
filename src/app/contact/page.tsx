@@ -8,7 +8,7 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <MainNav />
-      <div className="container mx-auto py-12 flex-grow">
+      <div className="container mx-auto py-12 flex-grow animate-fade-in">
         <h1 className="text-3xl font-bold mb-8 text-center">Contact Us</h1>
         <p className="mb-8 text-lg text-gray-700 text-center">
           We'd love to hear from you. Send us a message using the form below.
