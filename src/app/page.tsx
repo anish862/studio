@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import {Button} from '@/components/ui/button';
-import {ArrowRight, LineChart, BarChart, PieChart} from 'lucide-react';
+import {ArrowRight, LineChart, BarChart, PieChart, Code, TrendingUp, Search} from 'lucide-react';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {useEffect, useState} from 'react';
 import {Skeleton} from '@/components/ui/skeleton';
@@ -67,19 +67,28 @@ const ServicesSection = () => {
       <h2 className="text-3xl font-semibold mb-6 text-center">Our Expertise</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div className="p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-          <h3 className="text-xl font-semibold mb-2">Web Development</h3>
+          <div className="flex items-center mb-2">
+            <Code className="mr-2 h-5 w-5 text-primary" />
+            <h3 className="text-xl font-semibold">Web Development</h3>
+          </div>
           <p className="text-gray-600">
             Cutting-edge web solutions tailored to your unique business needs.
           </p>
         </div>
         <div className="p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-          <h3 className="text-xl font-semibold mb-2">Digital Marketing</h3>
+          <div className="flex items-center mb-2">
+            <TrendingUp className="mr-2 h-5 w-5 text-primary" />
+            <h3 className="text-xl font-semibold">Digital Marketing</h3>
+          </div>
           <p className="text-gray-600">
             Elevate your brand with our innovative digital marketing strategies.
           </p>
         </div>
         <div className="p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-          <h3 className="text-xl font-semibold mb-2">SEO Optimization</h3>
+          <div className="flex items-center mb-2">
+            <Search className="mr-2 h-5 w-5 text-primary" />
+            <h3 className="text-xl font-semibold">SEO Optimization</h3>
+          </div>
           <p className="text-gray-600">
             Drive organic growth and enhance your online visibility.
           </p>
