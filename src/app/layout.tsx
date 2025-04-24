@@ -2,7 +2,13 @@ import type {Metadata} from 'next';
 import {Geist, Geist_Mono} from 'next/font/google';
 import './globals.css';
 import {Toaster} from '@/components/ui/toaster';
-import {ThemeProvider} from "@/app/theme-provider";
+import {ThemeProvider} from "@/components/theme-toggle";
+import {MainNav} from '@/components/main-nav';
+
+export const metadata: Metadata = {
+  title: 'IrisMorphe',
+  description: 'Your partner in digital success.',
+};
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -14,11 +20,6 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-export const metadata: Metadata = {
-  title: 'IrisMorphe',
-  description: 'Your partner in digital success.',
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,10 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              {children}
-              <Toaster />
-          </ThemeProvider>
+        
+          <MainNav />
+            {children}
+            <Toaster />
+        
       </body>
     </html>
   );
