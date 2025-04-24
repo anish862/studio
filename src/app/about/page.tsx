@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -53,7 +52,7 @@ const AboutPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <MainNav />
+      
       <div className="container mx-auto py-12 flex-grow">
         <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">About Us</h1>
         <p className="mb-8 text-lg text-gray-700 text-center animate-fade-in">
@@ -88,4 +87,5 @@ const AboutPage = () => {
 };
 
 export default AboutPage;
+
 

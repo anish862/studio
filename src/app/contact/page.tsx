@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -8,7 +7,7 @@ import {MainNav} from '@/components/main-nav';
 const ContactPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <MainNav />
+      
       <div className="container mx-auto py-12 flex-grow animate-fade-in">
         <h1 className="text-3xl font-bold mb-8 text-center">Contact Us</h1>
         <p className="mb-8 text-lg text-gray-700 text-center">
@@ -23,4 +22,5 @@ const ContactPage = () => {
 };
 
 export default ContactPage;
+
 
