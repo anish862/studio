@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 import {Geist, Geist_Mono} from 'next/font/google';
 import './globals.css';
 import {Toaster} from '@/components/ui/toaster';
-import {ThemeToggle} from "@/components/theme-toggle";
+import {ThemeProvider} from "@/app/theme-provider";
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -27,11 +27,31 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <ThemeToggle />
-          {children}
-          <Toaster />
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <Loading />
+              {children}
+              <Toaster />
+          </ThemeProvider>
       </body>
     </html>
   );
+}
+
+function Loading() {
+    const rainbowColors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+
+    return (
+        <div className="fixed top-0 left-0 h-screen w-full flex flex-col items-center justify-center bg-background z-50">
+            <h1 className="text-4xl font-bold">
+                {
+                    'Irismorphe'.split('').map((letter, index) => (
+                        <span key={index} style={{ color: rainbowColors[index % rainbowColors.length] }}>
+                            {letter}
+                        </span>
+                    ))
+                }
+            </h1>
+        </div>
+    );
 }
 
