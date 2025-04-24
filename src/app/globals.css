@@ -86,3 +86,30 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .outline-animation {
+    @apply relative overflow-hidden;
+  }
+  .outline-animation:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 2px solid var(--accent); /* Use your accent color */
+    border-radius: inherit;
+    z-index: -1;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+}
