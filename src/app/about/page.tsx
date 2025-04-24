@@ -3,9 +3,12 @@
 import React from 'react';
 import Image from 'next/image';
 import {MainNav} from '@/components/main-nav';
+import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const AboutPage = () => {
-  const teamMembers = [
+  const {content, isLoading} = useDynamicContent('about-page');
+
+  const teamMembers = content?.teamMembers || [
     {
       id: 1,
       name: 'Alice Johnson',
@@ -50,13 +53,16 @@ const AboutPage = () => {
     },
   ];
 
+  if (isLoading) {
+    return <div>Loading...</div>; // Replace with a better loading state
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
-      
       <div className="container mx-auto py-12 flex-grow">
-        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">About Us</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">{content?.title || 'About Us'}</h1>
         <p className="mb-8 text-lg text-gray-700 text-center animate-fade-in">
-          Meet our team of experts dedicated to delivering exceptional digital solutions.
+          {content?.description || 'Meet our team of experts dedicated to delivering exceptional digital solutions.'}
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {teamMembers.map((member) => (
@@ -87,5 +93,3 @@ const AboutPage = () => {
 };
 
 export default AboutPage;
-
-

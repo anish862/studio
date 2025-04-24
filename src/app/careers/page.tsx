@@ -4,9 +4,12 @@ import React from 'react';
 import Image from 'next/image';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import {MainNav} from '@/components/main-nav';
+import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const CareersPage = () => {
-  const jobListings = [
+  const {content, isLoading} = useDynamicContent('careers-page');
+
+  const jobListings = content?.jobListings || [
     {
       id: 1,
       title: 'Senior Software Engineer',
@@ -20,7 +23,7 @@ const CareersPage = () => {
       description: 'Lead our marketing efforts and drive growth with creative and strategic campaigns that resonate with our audience.',
       location: 'New York, NY',
       imageUrl: 'https://picsum.photos/401/220',
-      },
+    },
     {
       id: 3,
       title: 'Data Scientist',
@@ -51,13 +54,16 @@ const CareersPage = () => {
     },
   ];
 
+  if (isLoading) {
+    return <div>Loading...</div>; // Replace with a better loading state
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
-      
       <div className="container mx-auto py-12 flex-grow">
-        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">Careers</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">{content?.title || 'Careers'}</h1>
         <p className="mb-8 text-lg text-gray-700 text-center animate-fade-in">
-          Join our team and help us build the future with your talent and passion.
+          {content?.description || 'Join our team and help us build the future with your talent and passion.'}
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {jobListings.map((job) => (
@@ -66,7 +72,7 @@ const CareersPage = () => {
                 <CardTitle className="text-xl">{job.title}</CardTitle>
               </CardHeader>
               <CardContent>
-              <Image
+                <Image
                   src={job.imageUrl}
                   alt={job.title}
                   width={400}
@@ -85,5 +91,3 @@ const CareersPage = () => {
 };
 
 export default CareersPage;
-
-

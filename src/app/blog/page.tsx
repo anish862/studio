@@ -4,9 +4,12 @@ import React from 'react';
 import Image from 'next/image';
 import {Card, CardContent, CardHeader, CardTitle, CardDescription} from '@/components/ui/card';
 import {MainNav} from '@/components/main-nav';
+import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const BlogPage = () => {
-  const posts = [
+  const {content, isLoading} = useDynamicContent('blog-page');
+
+  const posts = content?.posts || [
     {
       id: 1,
       title: 'The Future of AI in Marketing',
@@ -51,13 +54,16 @@ const BlogPage = () => {
     },
   ];
 
+  if (isLoading) {
+    return <div>Loading...</div>; // Replace with a better loading state
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
-      
       <div className="container mx-auto py-12 flex-grow">
-        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">Blog</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">{content?.title || 'Blog'}</h1>
         <p className="mb-8 text-lg text-gray-700 text-center animate-fade-in">
-          Stay informed with our latest insights and news on digital innovation and marketing strategies.
+          {content?.description || 'Stay informed with our latest insights and news on digital innovation and marketing strategies.'}
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
@@ -67,7 +73,7 @@ const BlogPage = () => {
                 <CardDescription className="text-gray-500">{post.date}</CardDescription>
               </CardHeader>
               <CardContent>
-              <Image
+                <Image
                   src={post.imageUrl}
                   alt={post.title}
                   width={400}
@@ -85,5 +91,3 @@ const BlogPage = () => {
 };
 
 export default BlogPage;
-
-

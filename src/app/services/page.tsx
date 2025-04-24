@@ -4,9 +4,12 @@ import React from 'react';
 import Image from 'next/image';
 import {Card, CardContent, CardHeader, CardTitle, CardDescription} from '@/components/ui/card';
 import {MainNav} from '@/components/main-nav';
+import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const ServicesPage = () => {
-  const services = [
+  const {content, isLoading} = useDynamicContent('services-page');
+
+  const services = content?.services || [
     {
       id: 1,
       title: 'Web Development',
@@ -51,13 +54,16 @@ const ServicesPage = () => {
     },
   ];
 
+  if (isLoading) {
+    return <div>Loading...</div>; // Replace with a better loading state
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
-      
       <div className="container mx-auto py-12 flex-grow">
-        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">Our Services</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center animate-fade-in">{content?.title || 'Our Services'}</h1>
         <p className="mb-8 text-lg text-gray-700 text-center animate-fade-in">
-          Empowering your business with innovative solutions and expertise.
+          {content?.description || 'Empowering your business with innovative solutions and expertise.'}
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
@@ -85,5 +91,3 @@ const ServicesPage = () => {
 };
 
 export default ServicesPage;
-
-
