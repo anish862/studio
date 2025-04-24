@@ -4,7 +4,7 @@ import './globals.css';
 import {Toaster} from '@/components/ui/toaster';
 import {MainNav} from '@/components/main-nav';
 import Footer from '@/components/footer';
-import {ThemeProvider} from "@/components/theme-provider";
+import {ThemeProvider} from "@/app/theme-provider";
 
 export const metadata: Metadata = {
   title: 'IrisMorphe',
@@ -31,6 +31,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           
+            <MainNav />
             {children}
             <Toaster />
           
