@@ -3,11 +3,18 @@
 import React from 'react';
 import Image from 'next/image';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
-import {MainNav} from '@/components/main-nav';
 import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const WorkPage = () => {
-  const {content, isLoading} = useDynamicContent('work-page');
+  const {content, isLoading, error} = useDynamicContent('work-page');
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   const projects = content?.projects || [
     {
@@ -47,10 +54,6 @@ const WorkPage = () => {
       imageUrl: 'https://picsum.photos/405/300',
     },
   ];
-
-  if (isLoading) {
-    return <div>Loading...</div>; // Replace with a better loading state
-  }
 
   return (
     <div className="min-h-screen flex flex-col">

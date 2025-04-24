@@ -2,14 +2,17 @@
 
 import React from 'react';
 import {ContactForm} from '@/components/contact-form';
-import {MainNav} from '@/components/main-nav';
 import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const ContactPage = () => {
-  const {content, isLoading} = useDynamicContent('contact-page');
+  const {content, isLoading, error} = useDynamicContent('contact-page');
 
   if (isLoading) {
-    return <div>Loading...</div>; // Replace with a better loading state
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
   }
 
   return (

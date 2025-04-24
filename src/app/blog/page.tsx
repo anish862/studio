@@ -3,11 +3,18 @@
 import React from 'react';
 import Image from 'next/image';
 import {Card, CardContent, CardHeader, CardTitle, CardDescription} from '@/components/ui/card';
-import {MainNav} from '@/components/main-nav';
 import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const BlogPage = () => {
-  const {content, isLoading} = useDynamicContent('blog-page');
+  const {content, isLoading, error} = useDynamicContent('blog-page');
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   const posts = content?.posts || [
     {
@@ -53,10 +60,6 @@ const BlogPage = () => {
       imageUrl: 'https://picsum.photos/405/200',
     },
   ];
-
-  if (isLoading) {
-    return <div>Loading...</div>; // Replace with a better loading state
-  }
 
   return (
     <div className="min-h-screen flex flex-col">

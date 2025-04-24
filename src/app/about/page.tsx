@@ -2,11 +2,18 @@
 
 import React from 'react';
 import Image from 'next/image';
-import {MainNav} from '@/components/main-nav';
 import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const AboutPage = () => {
-  const {content, isLoading} = useDynamicContent('about-page');
+  const {content, isLoading, error} = useDynamicContent('about-page');
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Replace with a better loading state
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   const teamMembers = content?.teamMembers || [
     {
@@ -52,10 +59,6 @@ const AboutPage = () => {
       imageUrl: 'https://picsum.photos/id/1084/400/400',
     },
   ];
-
-  if (isLoading) {
-    return <div>Loading...</div>; // Replace with a better loading state
-  }
 
   return (
     <div className="min-h-screen flex flex-col">

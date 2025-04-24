@@ -3,11 +3,18 @@
 import React from 'react';
 import Image from 'next/image';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
-import {MainNav} from '@/components/main-nav';
 import {useDynamicContent} from '@/hooks/useDynamicContent';
 
 const CareersPage = () => {
-  const {content, isLoading} = useDynamicContent('careers-page');
+  const {content, isLoading, error} = useDynamicContent('careers-page');
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   const jobListings = content?.jobListings || [
     {
@@ -53,10 +60,6 @@ const CareersPage = () => {
       imageUrl: 'https://picsum.photos/405/220',
     },
   ];
-
-  if (isLoading) {
-    return <div>Loading...</div>; // Replace with a better loading state
-  }
 
   return (
     <div className="min-h-screen flex flex-col">
