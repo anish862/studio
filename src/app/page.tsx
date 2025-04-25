@@ -1,7 +1,7 @@
 
 'use client';
 
-import Image from 'next/image';
+import React from 'react';
 import {
   LineChart,
   BarChart,
@@ -14,339 +14,11 @@ import {
   Award,
   Smartphone,
 } from 'lucide-react';
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
-import React, {useEffect, useState, useRef} from 'react';
-import {Skeleton} from '@/components/ui/skeleton';
-import {cn} from '@/lib/utils';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-
-// Define the structure for a service item
-interface Service {
-  title: string;
-  description: string;
-  icon: React.ElementType; // Use React.ElementType for component types
-}
-
-// Define component structure for Hero Slider slide
-interface Slide {
-  url: string;
-  title: string;
-  description: string;
-  buttonText?: string;
-  buttonLink?: string;
-}
-
-// Define component structure for Testimonial
-interface Testimonial {
-  name: string;
-  title: string;
-  testimonial: string;
-  imageUrl: string;
-}
-
-// Define component structure for Stat
-interface Stat {
-  title: string;
-  value: string;
-  trend: 'up' | 'down';
-  percentageChange: string;
-}
-
-
-
-// --- Component Definitions ---
-
-const HeroSlider = ({slides}: {slides: Slide[]}) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const timerRef = useRef<number | null>(null); // Use a ref to hold the timer ID
-
-  const goToNext = () => {
-    const isLastSlide = currentSlide === slides.length - 1;
-    const newIndex = isLastSlide ? 0 : currentSlide + 1;
-    setCurrentSlide(newIndex);
-  };
-
-  useEffect(() => {
-    // Clear any existing timer
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-
-    // Set up the timer to advance the slide every 5 seconds
-    timerRef.current = window.setTimeout(() => {
-      goToNext();
-    }, 5000);
-
-    // Clear the timer when the component unmounts
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-    };
-  }, [currentSlide, slides.length]); // Effect runs when the currentSlide or slides length changes
-
-
-  if (!slides || slides.length === 0) {
-    return <div className="h-[600px] flex items-center justify-center bg-muted">Loading slides...</div>; // Use theme color
-  }
-
-  return (
-    <div className="relative w-full h-[600px] overflow-hidden">
-      {slides.map((slide, index) => (
-        <div
-          key={index}
-          className={cn(
-            "absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ease-in-out",
-            index === currentSlide ? 'opacity-100 z-10 animate-fade-in' : 'opacity-0 z-0' // Added fade-in animation
-          )}
-        >
-          <Image
-            src={slide.url || 'https://picsum.photos/1200/600'}
-            alt={slide.title || `Slide ${index + 1}`}
-            fill // Use fill instead of layout
-            className="object-cover rounded-none" // Remove rounded corners for full width
-            priority={index === 0} // Prioritize loading the first image
-          />
-          {/* Updated container div for bottom-left alignment */}
-          <div className="absolute inset-0 flex items-end justify-start p-8 md:p-16">
-            <div className="bg-black bg-opacity-60 text-white p-6 md:p-8 rounded-md max-w-lg text-left"> {/* Increased opacity and text-left */}
-              <h2 className="text-2xl md:text-4xl font-bold mb-4">{slide.title}</h2>
-              <p className="text-base md:text-lg mb-4">{slide.description}</p>
-              {slide.buttonText && (
-                 <Link href={slide.buttonLink || '#'} className="inline-block bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 transition-colors">
-                   {slide.buttonText}
-                 </Link>
-               )}
-            </div>
-          </div>
-        </div>
-      ))}
-      {/* Dots for navigation */}
-      <div className="absolute bottom-4 right-4 flex space-x-2 z-20">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            aria-label={`Go to slide ${index + 1}`}
-            className={cn(
-              'rounded-full w-3 h-3 transition-colors duration-300',
-              currentSlide === index ? 'bg-primary' : 'bg-gray-300 hover:bg-gray-400'
-            )}
-            onClick={() => setCurrentSlide(index)}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const AboutUsSection = ({title, description, imageUrl, buttonText = 'Read More'}: {title: string, description: string, imageUrl: string, buttonText?: string}) => {
-  return (
-    <div className="mt-20 px-8 md:px-24 animate-fade-in">
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"> {/* Increased gap */}
-          <div className="order-2 md:order-1">
-            <h2 className="text-3xl font-semibold mb-4">{title}</h2>
-            <p className="text-foreground/80 mb-6 leading-relaxed">{description}</p> {/* Updated text color and leading */}
-            <Link href="/about" className="inline-block bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 transition-colors">
-              {buttonText}
-            </Link>
-          </div>
-          <div className="order-1 md:order-2 flex justify-center md:justify-end">
-            <Image
-              src={imageUrl}
-              alt="About Us"
-              width={500} // Adjust size as needed
-              height={350} // Adjust size as needed
-              className="rounded-lg shadow-lg transition-transform duration-300 hover:scale-105" // Use lg radius
-              style={{ objectFit: 'cover' }}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-
-const ServicesSection = ({services}: {services: Service[]}) => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate loading time
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-  }, []);
-
-  return (
-    <div className="mt-16 px-8 md:px-24 animate-fade-in">
-      <h2 className="text-3xl font-semibold mb-8 text-center">Our Expertise</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        {services.map((service, index) => (
-           <Card key={index} className="flex flex-col items-center text-center p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-            <CardHeader className="p-0 mb-4">
-              {isLoading ? (
-                 <Skeleton className="h-10 w-10 rounded-full mx-auto" />
-               ) : (
-                <service.icon className="h-10 w-10 text-primary mx-auto" />
-               )}
-            </CardHeader>
-            <CardContent className="p-0">
-              <CardTitle className="text-xl font-semibold mb-2">
-                {isLoading ? <Skeleton className="h-6 w-32 mx-auto" /> : service.title}
-              </CardTitle>
-              <CardDescription className="text-foreground/80"> {/* Updated text color */}
-                {isLoading ? (
-                  <>
-                    <Skeleton className="h-4 w-full mb-1 mx-auto" />
-                    <Skeleton className="h-4 w-5/6 mx-auto" />
-                  </>
-                 ) : (
-                  service.description
-                )}
-              </CardDescription>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-
-const TestimonialsSection = ({testimonials}: {testimonials: Testimonial[]}) => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate loading time
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
-
-  // Ensure the return statement correctly wraps the JSX
-  return (
-    <div className="mt-20 px-8 md:px-24 animate-fade-in">
-      <h2 className="text-3xl font-semibold mb-8 text-center">
-        What Our Clients Say
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {testimonials.map((testimonial) => (
-
-            <Card key={testimonial.name} className="relative">
-              <CardHeader>
-                <div className="flex items-center mb-4">
-                  {isLoading ? (
-                    <Skeleton className="h-12 w-12 rounded-full mr-4" />
-                  ) : (
-                    <Image
-                      src={testimonial.imageUrl}
-                      alt={testimonial.name}
-                      width={48}
-                      height={48}
-                      className="rounded-full mr-4"
-                    />
-                  )}
-                  <div>
-                    {isLoading ? (
-                      <>
-                        <Skeleton className="h-4 w-32 mb-1" />
-                        <Skeleton className="h-3 w-24" />
-                      </>
-                    ) : (
-                      <>
-                        <CardTitle className="text-lg">{testimonial.name}</CardTitle>
-                        <CardDescription className="text-muted-foreground">
-                          {testimonial.title}
-                        </CardDescription>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {isLoading ? (
-                  <>
-                    <Skeleton className="h-4 w-full mb-2" />
-                    <Skeleton className="h-4 w-5/6 mb-2" />
-                    <Skeleton className="h-4 w-3/4" />
-                  </>
-                ) : (
-                  <p className="text-foreground/80">{testimonial.testimonial}</p>
-                )}
-              </CardContent>
-            </Card>
-
-        ))}
-      </div>
-    </div>
-  );
-};
-
-
-const StatsSection = ({stats}: {stats: Stat[]}) => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate loading time
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1200);
-  }, []);
-
-  return (
-    <div className="mt-20 px-8 md:px-24 animate-fade-in">
-      <h2 className="text-3xl font-semibold mb-8 text-center">
-        Key Performance Indicators
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {stats.map((stat) => (
-          <Card key={stat.title} className="relative">
-            <CardHeader>
-              <CardTitle className="text-xl flex items-center">
-                {isLoading ? (
-                  <Skeleton className="h-6 w-6 mr-2 rounded-full" />
-                ) : (
-                  // Replace hardcoded icons with dynamic icons based on stat type
-                  (() => {
-                    if (stat.title === 'Website Traffic') {
-                      return <LineChart className="mr-2 h-6 w-6 text-primary" />;
-                    } else if (stat.title === 'Conversion Rate') {
-                      return <BarChart className="mr-2 h-6 w-6 text-primary" />;
-                    } else if (stat.title === 'Customer Engagement') {
-                      return <PieChart className="mr-2 h-6 w-6 text-primary" />;
-                    }
-                    return null; // Or a default icon
-                  })()
-                )}
-                {isLoading ? <Skeleton className="h-6 w-24" /> : stat.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {isLoading ? (
-                <Skeleton className="h-8 w-32" />
-              ) : (
-                <div className="text-2xl font-bold">{stat.value}</div>
-              )}
-              {isLoading ? (
-                <Skeleton className="h-4 w-20" />
-              ) : (
-                <div className="text-sm text-muted-foreground mt-2"> {/* Updated text color */}
-                  <span className={stat.trend === 'up' ? 'text-green-500' : 'text-red-500'}>
-                    {stat.trend === 'up' ? '▲' : '▼'} {stat.percentageChange}
-                  </span>{' '}
-                  vs. last month
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </div>
-  );
-};
-
+import {HeroSlider, type Slide} from '@/components/home/hero-slider';
+import {AboutUsSection} from '@/components/home/about-us-section';
+import {ServicesSection, type Service} from '@/components/home/services-section';
+import {StatsSection, type Stat} from '@/components/home/stats-section';
+import {TestimonialsSection, type Testimonial} from '@/components/home/testimonials-section';
 
 
 // --- Home Component ---
@@ -388,19 +60,22 @@ export default function Home() {
             title: "Website Traffic",
             value: "150%",
             trend: "up",
-            percentageChange: "+35%"
+            percentageChange: "+35%",
+            icon: LineChart,
         },
         {
             title: "Conversion Rate",
             value: "85%",
             trend: "up",
-            percentageChange: "+15%"
+            percentageChange: "+15%",
+            icon: BarChart,
         },
         {
             title: "Customer Engagement",
             value: "92%",
             trend: "up",
-            percentageChange: "+22%"
+            percentageChange: "+22%",
+            icon: PieChart,
         }
     ];
 
