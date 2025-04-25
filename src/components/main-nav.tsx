@@ -54,9 +54,9 @@ export function MainNav() {
   }, []);
 
   return (
-    <div className="border-b">
-      {/* Updated container to use justify-between for overall layout */}
-      <div className="container flex h-16 items-center justify-between py-4">
+    <div className="border-b w-full">
+      {/* Container limits the width and centers content */}
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
           <span className="font-bold text-xl font-serif">IrisMorphe</span>
