@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -136,7 +137,8 @@ const TestimonialsSection = ({testimonials}: {testimonials: any[]}) => {
       </div>
     </section>
   );
-};
+}; // Added missing closing brace here
+
 
 const StatsSection = ({stats}: {stats: any[]}) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -197,7 +199,7 @@ const StatsSection = ({stats}: {stats: any[]}) => {
         ))}
       </div>
     </section>
-  ); // Added missing closing brace
+  );
 };
 
 const HeroSlider = ({slides}: {slides: any[]}) => {
@@ -241,16 +243,15 @@ const HeroSlider = ({slides}: {slides: any[]}) => {
           key={index}
           className={cn(
             "absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ease-in-out",
-            index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+            index === currentSlide ? 'opacity-100 z-10 animate-fade-in' : 'opacity-0 z-0' // Added fade-in animation
           )}
         >
           <Image
             src={slide.url || 'https://picsum.photos/1200/600'}
             alt={slide.title || `Slide ${index + 1}`}
-            layout="fill"
-            objectFit="cover"
+            fill // Use fill instead of layout
+            className="object-cover rounded-none" // Remove rounded corners for full width
             priority={index === 0} // Prioritize loading the first image
-            className="rounded-none" // Remove rounded corners for full width
           />
           {/* Updated container div for bottom-left alignment */}
           <div className="absolute inset-0 flex items-end justify-start p-8 md:p-16">
@@ -403,3 +404,4 @@ export default function Home() {
     </div>
   );
 }
+
