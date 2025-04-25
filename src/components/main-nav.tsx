@@ -56,8 +56,8 @@ export function MainNav() {
   return (
     <div className="border-b">
       <div className="container flex h-16 items-center justify-between py-4">
-        {/* Reduced right margin (mr-2) to move the logo slightly right */}
-        <Link href="/" className="mr-2 flex items-center space-x-2">
+        {/* Removed mr-2 to adjust logo alignment */}
+        <Link href="/" className="flex items-center space-x-2">
           <span className="font-bold text-xl font-serif">IrisMorphe</span>
         </Link>
         <div className="hidden md:flex flex-grow justify-center"> {/* Added flex-grow and justify-center */}
@@ -86,7 +86,7 @@ export function MainNav() {
             </SheetTrigger>
             <SheetContent side="left" className="sm:max-w-sm">
               <div className="grid gap-4 py-4">
-                <Link href="/" className="mr-6 flex items-center space-x-2">
+                <Link href="/" className="flex items-center space-x-2"> {/* Adjusted margin here if needed */}
                   <span className="font-bold text-xl font-serif">IrisMorphe</span>
                 </Link>
                 <div className="grid gap-2">
@@ -112,3 +112,4 @@ export function MainNav() {
     </div>
   );
 }
+
