@@ -66,7 +66,7 @@ export function MainNav() {
   return (
     <div
       className={cn(
-        "border-b w-full transition-all duration-300",
+        "w-full transition-all duration-300", // Removed border-b class
         isSticky ? "fixed top-0 left-0 z-50 bg-background/95 backdrop-blur-sm shadow-md" : "relative bg-background"
       )}
     >
