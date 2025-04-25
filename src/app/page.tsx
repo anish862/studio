@@ -15,7 +15,7 @@ import {
   Smartphone,
 } from 'lucide-react';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
-import {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {Skeleton} from '@/components/ui/skeleton';
 import {cn} from '@/lib/utils';
 import Link from 'next/link';
@@ -435,3 +435,4 @@ export default function Home() {
     </div>
   );
 }
+
