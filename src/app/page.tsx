@@ -137,7 +137,7 @@ const TestimonialsSection = ({testimonials}: {testimonials: any[]}) => {
       </div>
     </section>
   );
-}; // Added missing closing brace here
+};
 
 
 const StatsSection = ({stats}: {stats: any[]}) => {
