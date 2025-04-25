@@ -415,7 +415,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex-grow pt-16"> {/* Added padding-top to prevent content overlap with sticky nav */}
+      <main className="flex-grow"> {/* Removed padding-top */}
         {/* Hero Slider section takes full width */}
         <div className="relative w-full animate-fade-in">
           <HeroSlider slides={slides} />
