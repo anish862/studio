@@ -12,6 +12,13 @@ import {
   PenTool,
   Palette,
   Users,
+  Mail,
+  LayoutTemplate,
+  Award,
+  Smartphone,
+  Share2,
+  FileText,
+  Target,
 } from 'lucide-react';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {useEffect, useState, useRef} from 'react';
@@ -281,15 +288,15 @@ const AboutUsSection = ({title, description, imageUrl}: {title: string, descript
 
 
 export default function Home() {
-    // Updated services array
+    // Updated services array based on user request
     const services: Service[] = [
-      { title: "Branding", description: "Crafting unique brand identities that resonate.", icon: Megaphone },
-      { title: "Web Development", description: "Building responsive and high-performing websites.", icon: Code },
-      { title: "Digital Marketing", description: "Driving growth with targeted online strategies.", icon: TrendingUp },
-      { title: "Content Marketing", description: "Creating valuable content to engage your audience.", icon: PenTool },
-      { title: "Design Services", description: "Delivering visually stunning and user-friendly designs.", icon: Palette },
-      { title: "SEO", description: "Optimizing your online presence for search engines.", icon: Search },
-      { title: "Social Media Marketing", description: "Engaging communities and building brand loyalty.", icon: Users },
+      { title: "Search Engine Optimization (SEO)", description: "Improving website visibility on search engines through organic methods.", icon: Search },
+      { title: "Social Media Marketing (SMM)", description: "Creating and managing content on social media platforms to engage audiences.", icon: Users },
+      { title: "Content Marketing", description: "Developing valuable content like blogs, videos, and infographics to attract and retain customers.", icon: FileText },
+      { title: "Email Marketing", description: "Designing and executing email campaigns to nurture leads and maintain customer relationships.", icon: Mail },
+      { title: "Web Design & Development", description: "Building and optimizing websites for user experience and functionality.", icon: LayoutTemplate },
+      { title: "Branding Services", description: "Establishing and enhancing a brand's identity and presence.", icon: Award },
+      { title: "Mobile App Development", description: "Creating apps to engage users and expand digital reach.", icon: Smartphone },
     ];
 
 
