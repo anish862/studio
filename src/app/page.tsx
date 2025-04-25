@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -140,7 +139,7 @@ const HeroSlider = ({slides}: {slides: Slide[]}) => {
 
 const AboutUsSection = ({title, description, imageUrl, buttonText = 'Read More'}: {title: string, description: string, imageUrl: string, buttonText?: string}) => {
   return (
-    <section className="mt-20 px-8 md:px-24 animate-fade-in">
+    <div className="mt-20 px-8 md:px-24 animate-fade-in">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"> {/* Increased gap */}
           <div className="order-2 md:order-1">
@@ -162,7 +161,7 @@ const AboutUsSection = ({title, description, imageUrl, buttonText = 'Read More'}
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
@@ -178,7 +177,7 @@ const ServicesSection = ({services}: {services: Service[]}) => {
   }, []);
 
   return (
-    <section className="mt-16 px-8 md:px-24 animate-fade-in">
+    <div className="mt-16 px-8 md:px-24 animate-fade-in">
       <h2 className="text-3xl font-semibold mb-8 text-center">Our Expertise</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {services.map((service, index) => (
@@ -208,7 +207,7 @@ const ServicesSection = ({services}: {services: Service[]}) => {
           </Card>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 
@@ -225,7 +224,7 @@ const TestimonialsSection = ({testimonials}: {testimonials: Testimonial[]}) => {
 
   // Ensure the return statement correctly wraps the JSX
   return (
-    <section className="mt-20 px-8 md:px-24 animate-fade-in">
+    <div className="mt-20 px-8 md:px-24 animate-fade-in">
       <h2 className="text-3xl font-semibold mb-8 text-center">
         What Our Clients Say
       </h2>
@@ -276,7 +275,7 @@ const TestimonialsSection = ({testimonials}: {testimonials: Testimonial[]}) => {
           </Card>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 
@@ -292,7 +291,7 @@ const StatsSection = ({stats}: {stats: Stat[]}) => {
   }, []);
 
   return (
-    <section className="mt-20 px-8 md:px-24 animate-fade-in">
+    <div className="mt-20 px-8 md:px-24 animate-fade-in">
       <h2 className="text-3xl font-semibold mb-8 text-center">
         Key Performance Indicators
       </h2>
@@ -339,7 +338,7 @@ const StatsSection = ({stats}: {stats: Stat[]}) => {
           </Card>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 
@@ -412,9 +411,9 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow">
         {/* Hero Slider section takes full width */}
-        <section className="relative w-full animate-fade-in">
+        <div className="relative w-full animate-fade-in">
           <HeroSlider slides={slides} />
-        </section>
+        </div>
 
         {/* Other sections remain containerized */}
         <div className="container mx-auto">
@@ -429,7 +428,39 @@ export default function Home() {
 
           <StatsSection stats={stats} />
 
-          <TestimonialsSection testimonials={testimonials} />
+          <div className="mt-20 px-8 md:px-24 animate-fade-in">
+            <h2 className="text-3xl font-semibold mb-8 text-center">
+              What Our Clients Say
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {testimonials.map((testimonial) => (
+                <Card key={testimonial.name} className="relative">
+                  <CardHeader>
+                    <div className="flex items-center mb-4">
+                      <Image
+                        src={testimonial.imageUrl}
+                        alt={testimonial.name}
+                        width={48}
+                        height={48}
+                        className="rounded-full mr-4"
+                      />
+                      <div>
+                        <CardTitle className="text-lg">{testimonial.name}</CardTitle>
+                        <CardDescription className="text-muted-foreground">
+                          {testimonial.title}
+                        </CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-foreground/80">{testimonial.testimonial}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+          
+          
         </div>
       </main>
     </div>
