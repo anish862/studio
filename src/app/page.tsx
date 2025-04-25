@@ -5,20 +5,13 @@ import {
   LineChart,
   BarChart,
   PieChart,
-  Code,
-  TrendingUp,
   Search,
-  Megaphone,
-  PenTool,
-  Palette,
   Users,
+  FileText,
   Mail,
   LayoutTemplate,
   Award,
   Smartphone,
-  Share2,
-  FileText,
-  Target,
 } from 'lucide-react';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {useEffect, useState, useRef} from 'react';
@@ -60,7 +53,7 @@ const ServicesSection = ({services}: {services: Service[]}) => {
               <CardTitle className="text-xl font-semibold mb-2">
                 {isLoading ? <Skeleton className="h-6 w-32 mx-auto" /> : service.title}
               </CardTitle>
-              <CardDescription className="text-gray-600">
+              <CardDescription className="text-foreground/80"> {/* Updated text color */}
                 {isLoading ? (
                   <>
                     <Skeleton className="h-4 w-full mb-1 mx-auto" />
@@ -119,7 +112,7 @@ const TestimonialsSection = ({testimonials}: {testimonials: any[]}) => {
                   ) : (
                     <>
                       <CardTitle className="text-lg">{testimonial.name}</CardTitle>
-                      <CardDescription className="text-gray-500">
+                      <CardDescription className="text-muted-foreground"> {/* Updated text color */}
                         {testimonial.title}
                       </CardDescription>
                     </>
@@ -135,7 +128,7 @@ const TestimonialsSection = ({testimonials}: {testimonials: any[]}) => {
                   <Skeleton className="h-4 w-3/4" />
                 </>
               ) : (
-                <p className="text-gray-600">{testimonial.testimonial}</p>
+                <p className="text-foreground/80">{testimonial.testimonial}</p> {/* Updated text color */}
               )}
             </CardContent>
           </Card>
@@ -171,11 +164,11 @@ const StatsSection = ({stats}: {stats: any[]}) => {
                   // Replace hardcoded icons with dynamic icons based on stat type
                   (() => {
                     if (stat.title === 'Website Traffic') {
-                      return <LineChart className="mr-2 h-6 w-6" />;
+                      return <LineChart className="mr-2 h-6 w-6 text-primary" />;
                     } else if (stat.title === 'Conversion Rate') {
-                      return <BarChart className="mr-2 h-6 w-6" />;
+                      return <BarChart className="mr-2 h-6 w-6 text-primary" />;
                     } else if (stat.title === 'Customer Engagement') {
-                      return <PieChart className="mr-2 h-6 w-6" />;
+                      return <PieChart className="mr-2 h-6 w-6 text-primary" />;
                     }
                     return null; // Or a default icon
                   })()
@@ -192,7 +185,7 @@ const StatsSection = ({stats}: {stats: any[]}) => {
               {isLoading ? (
                 <Skeleton className="h-4 w-20" />
               ) : (
-                <div className="text-sm text-gray-500 mt-2">
+                <div className="text-sm text-muted-foreground mt-2"> {/* Updated text color */}
                   <span className={stat.trend === 'up' ? 'text-green-500' : 'text-red-500'}>
                     {stat.trend === 'up' ? '▲' : '▼'} {stat.percentageChange}
                   </span>{' '}
@@ -204,7 +197,7 @@ const StatsSection = ({stats}: {stats: any[]}) => {
         ))}
       </div>
     </section>
-  );
+  ); // Added missing closing brace
 };
 
 const HeroSlider = ({slides}: {slides: any[]}) => {
@@ -238,7 +231,7 @@ const HeroSlider = ({slides}: {slides: any[]}) => {
 
 
   if (!slides || slides.length === 0) {
-    return <div className="h-[600px] flex items-center justify-center bg-gray-200">Loading slides...</div>; // Or some placeholder
+    return <div className="h-[600px] flex items-center justify-center bg-muted">Loading slides...</div>; // Use theme color
   }
 
   return (
@@ -257,22 +250,32 @@ const HeroSlider = ({slides}: {slides: any[]}) => {
             layout="fill"
             objectFit="cover"
             priority={index === 0} // Prioritize loading the first image
-            className="rounded-md"
+            className="rounded-none" // Remove rounded corners for full width
           />
-          <div className="absolute inset-0 flex items-center p-8 md:p-16">
-            <div className="bg-black bg-opacity-50 text-white p-6 md:p-8 rounded-md max-w-lg">
+          {/* Updated container div for bottom-left alignment */}
+          <div className="absolute inset-0 flex items-end justify-start p-8 md:p-16">
+            <div className="bg-black bg-opacity-60 text-white p-6 md:p-8 rounded-md max-w-lg text-left"> {/* Increased opacity and text-left */}
               <h2 className="text-2xl md:text-4xl font-bold mb-4">{slide.title}</h2>
-              <p className="text-base md:text-lg">{slide.description}</p>
+              <p className="text-base md:text-lg mb-4">{slide.description}</p>
+              {slide.buttonText && (
+                 <Link href={slide.buttonLink || '#'} className="inline-block bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 transition-colors">
+                   {slide.buttonText}
+                 </Link>
+               )}
             </div>
           </div>
         </div>
       ))}
-      <div className="absolute bottom-4 right-4 flex z-20">
+      {/* Dots for navigation */}
+      <div className="absolute bottom-4 right-4 flex space-x-2 z-20">
         {slides.map((_, index) => (
           <button
             key={index}
             aria-label={`Go to slide ${index + 1}`}
-            className={`rounded-full w-3 h-3 mx-1 transition-colors duration-300 ${currentSlide === index ? 'bg-primary' : 'bg-gray-300 hover:bg-gray-400'}`}
+            className={cn(
+              'rounded-full w-3 h-3 transition-colors duration-300',
+              currentSlide === index ? 'bg-primary' : 'bg-gray-300 hover:bg-gray-400'
+            )}
             onClick={() => setCurrentSlide(index)}
           />
         ))}
@@ -286,10 +289,10 @@ const AboutUsSection = ({title, description, imageUrl, buttonText = 'Read More'}
   return (
     <section className="mt-20 px-8 md:px-24 animate-fade-in">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"> {/* Increased gap */}
           <div className="order-2 md:order-1">
             <h2 className="text-3xl font-semibold mb-4">{title}</h2>
-            <p className="text-gray-600 mb-6">{description}</p>
+            <p className="text-foreground/80 mb-6 leading-relaxed">{description}</p> {/* Updated text color and leading */}
             <Link href="/about" className="inline-block bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 transition-colors">
               {buttonText}
             </Link>
@@ -300,7 +303,7 @@ const AboutUsSection = ({title, description, imageUrl, buttonText = 'Read More'}
               alt="About Us"
               width={500} // Adjust size as needed
               height={350} // Adjust size as needed
-              className="rounded-md shadow-lg transition-transform duration-300 hover:scale-105"
+              className="rounded-lg shadow-lg transition-transform duration-300 hover:scale-105" // Use lg radius
               style={{ objectFit: 'cover' }}
             />
           </div>
@@ -312,7 +315,6 @@ const AboutUsSection = ({title, description, imageUrl, buttonText = 'Read More'}
 
 
 export default function Home() {
-    // Updated services array based on user request
     const services: Service[] = [
       { title: "Search Engine Optimization (SEO)", description: "Improving website visibility on search engines through organic methods.", icon: Search },
       { title: "Social Media Marketing (SMM)", description: "Creating and managing content on social media platforms to engage audiences.", icon: Users },
@@ -322,7 +324,6 @@ export default function Home() {
       { title: "Branding Services", description: "Establishing and enhancing a brand's identity and presence.", icon: Award },
       { title: "Mobile App Development", description: "Creating apps to engage users and expand digital reach.", icon: Smartphone },
     ];
-
 
     const testimonials = [
         {
@@ -366,33 +367,38 @@ export default function Home() {
         }
     ];
 
+    // Updated slides with potentially more relevant image IDs and button details
     const slides = [
-        { url: "https://picsum.photos/1200/600?random=1", title: "Organic Growth Experts", description: "Boost your website's visibility and attract more traffic using tried-and-true SEO techniques." },
-        { url: "https://picsum.photos/1200/600?random=2", title: "Social Buzz Creators", description: "Ignite engagement and build relationships on social media with tailored content strategies." },
-        { url: "https://picsum.photos/1200/600?random=3", title: "Storytelling Masters", description: "Craft compelling blogs, videos, and infographics that keep your audience coming back for more." },
-        { url: "https://picsum.photos/1200/600?random=4", title: "Connection Builders", description: "Deliver impactful email campaigns that nurture leads and drive business growth effortlessly." },
-        { url: "https://picsum.photos/1200/600?random=5", title: "Digital Architects", description: "Design responsive, functional websites that offer an outstanding user experience for your customers." }
+        { url: "https://picsum.photos/seed/seo/1200/600", title: "Organic Growth Experts", description: "Boost your website's visibility and attract more traffic using tried-and-true SEO techniques.", buttonText: "Learn SEO", buttonLink: "/services#seo" },
+        { url: "https://picsum.photos/seed/social/1200/600", title: "Social Buzz Creators", description: "Ignite engagement and build relationships on social media with tailored content strategies.", buttonText: "Explore SMM", buttonLink: "/services#smm" },
+        { url: "https://picsum.photos/seed/content/1200/600", title: "Storytelling Masters", description: "Craft compelling blogs, videos, and infographics that keep your audience coming back for more.", buttonText: "See Content", buttonLink: "/services#content" },
+        { url: "https://picsum.photos/seed/email/1200/600", title: "Connection Builders", description: "Deliver impactful email campaigns that nurture leads and drive business growth effortlessly.", buttonText: "Email Strategies", buttonLink: "/services#email" },
+        { url: "https://picsum.photos/seed/webdev/1200/600", title: "Digital Architects", description: "Design responsive, functional websites that offer an outstanding user experience for your customers.", buttonText: "Web Design", buttonLink: "/services#web" }
     ];
 
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow">
-        <section className="relative w-full text-center animate-fade-in">
+        {/* Hero Slider section takes full width */}
+        <section className="relative w-full animate-fade-in">
           <HeroSlider slides={slides} />
         </section>
 
-        <AboutUsSection
-          title="About IrisMorphe"
-          description="Welcome to IrisMorphe, your trusted partner in digital marketing excellence. We specialize in transforming businesses with our tailored services, including SEO, PPC, social media management, content creation, and web design. With a passion for innovation and proven strategies, we help brands grow, connect, and thrive in the digital landscape. Our commitment to creativity and measurable results ensures your success online. Explore the full spectrum of our services and let us take your business to the next level."
-          imageUrl="https://picsum.photos/id/1015/500/350" // Slightly adjusted size
-          buttonText="Discover More"
-        />
+        {/* Other sections remain containerized */}
+        <div className="container mx-auto">
+          <AboutUsSection
+            title="About IrisMorphe"
+            description="Welcome to IrisMorphe, your trusted partner in digital marketing excellence. We specialize in transforming businesses with our tailored services, including SEO, PPC, social media management, content creation, and web design. With a passion for innovation and proven strategies, we help brands grow, connect, and thrive in the digital landscape. Our commitment to creativity and measurable results ensures your success online. Explore the full spectrum of our services and let us take your business to the next level."
+            imageUrl="https://picsum.photos/id/1015/500/350" // Slightly adjusted size
+            buttonText="Discover More"
+          />
 
-        <ServicesSection services={services} />
+          <ServicesSection services={services} />
 
-        <StatsSection stats={stats} />
+          <StatsSection stats={stats} />
 
-        <TestimonialsSection testimonials={testimonials} />
+          <TestimonialsSection testimonials={testimonials} />
+        </div>
       </main>
     </div>
   );
