@@ -1,9 +1,10 @@
 'use client';
 
-import {Button} from "@/components/ui/button";
-import {SunIcon, MoonIcon} from "lucide-react";
+import {Button} from '@/components/ui/button';
+import {SunIcon, MoonIcon} from 'lucide-react';
 import {useTheme} from 'next-themes';
-import {useEffect, useState} from "react";
+import {useEffect, useState} from 'react';
+import {Switch} from "@/components/ui/switch";
 
 export const ThemeToggle = () => {
     const [mounted, setMounted] = useState(false)
@@ -16,46 +17,23 @@ export const ThemeToggle = () => {
     if (!mounted) {
         return (
             <div className="flex justify-end p-4">
-                <Button
+                <Switch
                     size="sm"
-                    variant="ghost"
                     disabled
-                >
-                    <SunIcon className="mr-2 h-4 w-4"/>
-                    Light
-                </Button>
-                <Button
-                    size="sm"
-                    variant="ghost"
-                    disabled
-                >
-                    <MoonIcon className="mr-2 h-4 w-4"/>
-                    Dark
-                </Button>
+                />
             </div>
         )
     }
 
     return (
         <div className="flex justify-end p-4">
-            <Button
+            <Switch
                 size="sm"
-                variant="ghost"
-                onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-            >
-                {resolvedTheme === "dark" ? (
-                    <>
-                        <SunIcon className="mr-2 h-4 w-4"/>
-                        Light
-                    </>
-                ) : (
-                    <>
-                        <MoonIcon className="mr-2 h-4 w-4"/>
-                        Dark
-                    </>
-                )}
-            </Button>
+                onChecked={resolvedTheme === "dark"}
+                onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
+            />
         </div>
     );
 };
+
 
