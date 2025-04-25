@@ -367,11 +367,11 @@ export default function Home() {
     ];
 
     const slides = [
-        { url: "https://picsum.photos/1200/600?random=1", title: "Welcome to IrisMorphe", description: "Your partner in digital success. We create impactful digital experiences." },
-        { url: "https://picsum.photos/1200/600?random=2", title: "Innovative Solutions", description: "We provide cutting-edge solutions to help your business thrive in the digital age." },
-        { url: "https://picsum.photos/1200/600?random=3", title: "Expert Team", description: "Meet our passionate team dedicated to delivering exceptional digital results." },
-        { url: "https://picsum.photos/1200/600?random=4", title: "Data-Driven Strategies", description: "Leveraging insights to optimize performance and achieve measurable results." },
-        { url: "https://picsum.photos/1200/600?random=5", title: "Client-Centric Approach", description: "Your satisfaction is our top priority. We build lasting partnerships." }
+        { url: "https://picsum.photos/1200/600?random=1", title: "Organic Growth Experts", description: "Boost your website's visibility and attract more traffic using tried-and-true SEO techniques." },
+        { url: "https://picsum.photos/1200/600?random=2", title: "Social Buzz Creators", description: "Ignite engagement and build relationships on social media with tailored content strategies." },
+        { url: "https://picsum.photos/1200/600?random=3", title: "Storytelling Masters", description: "Craft compelling blogs, videos, and infographics that keep your audience coming back for more." },
+        { url: "https://picsum.photos/1200/600?random=4", title: "Connection Builders", description: "Deliver impactful email campaigns that nurture leads and drive business growth effortlessly." },
+        { url: "https://picsum.photos/1200/600?random=5", title: "Digital Architects", description: "Design responsive, functional websites that offer an outstanding user experience for your customers." }
     ];
 
   return (
