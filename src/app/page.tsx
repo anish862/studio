@@ -8,6 +8,10 @@ import {
   Code,
   TrendingUp,
   Search,
+  Megaphone,
+  PenTool,
+  Palette,
+  Users,
 } from 'lucide-react';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {useEffect, useState, useRef} from 'react';
@@ -15,30 +19,34 @@ import {Skeleton} from '@/components/ui/skeleton';
 import {cn} from '@/lib/utils';
 import Link from 'next/link';
 
-const ServicesSection = ({services}: {services: any[]}) => {
+// Define the structure for a service item
+interface Service {
+  title: string;
+  description: string;
+  icon: React.ElementType; // Use React.ElementType for component types
+}
+
+const ServicesSection = ({services}: {services: Service[]}) => {
   return (
     <section className="mt-16 px-8 md:px-24 animate-fade-in">
-      <h2 className="text-3xl font-semibold mb-6 text-center">Our Expertise</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {services.map((service) => (
-          <div
-            key={service.title}
-            className="p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-          >
-            <div className="flex items-center mb-2">
-              {/* Replace hardcoded icons with dynamic icons based on service type */}
-              {service.title === 'Web Development' && <Code className="mr-2 h-5 w-5 text-primary" />}
-              {service.title === 'Digital Marketing' && <TrendingUp className="mr-2 h-5 w-5 text-primary" />}
-              {service.title === 'SEO Optimization' && <Search className="mr-2 h-5 w-5 text-primary" />}
-              <h3 className="text-xl font-semibold">{service.title}</h3>
-            </div>
-            <p className="text-gray-600">{service.description}</p>
-          </div>
+      <h2 className="text-3xl font-semibold mb-8 text-center">Our Expertise</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {services.map((service, index) => (
+          <Card key={index} className="flex flex-col items-center text-center p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+            <CardHeader className="p-0 mb-4">
+              <service.icon className="h-10 w-10 text-primary mx-auto" />
+            </CardHeader>
+            <CardContent className="p-0">
+              <CardTitle className="text-xl font-semibold mb-2">{service.title}</CardTitle>
+              <CardDescription className="text-gray-600">{service.description}</CardDescription>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </section>
   );
 };
+
 
 const TestimonialsSection = ({testimonials}: {testimonials: any[]}) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -168,9 +176,15 @@ const StatsSection = ({stats}: {stats: any[]}) => {
   );
 };
 
-const Slider = ({slides}: {slides: any[]}) => {
+const HeroSlider = ({slides}: {slides: any[]}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const timerRef = useRef<number>(null); // Use a ref to hold the timer ID
+  const timerRef = useRef<number | null>(null); // Use a ref to hold the timer ID
+
+  const goToNext = () => {
+    const isLastSlide = currentSlide === slides.length - 1;
+    const newIndex = isLastSlide ? 0 : currentSlide + 1;
+    setCurrentSlide(newIndex);
+  };
 
   useEffect(() => {
     // Clear any existing timer
@@ -184,48 +198,50 @@ const Slider = ({slides}: {slides: any[]}) => {
     }, 5000);
 
     // Clear the timer when the component unmounts
-    return () => clearTimeout(timerRef.current);
-  }, [currentSlide]); // Effect runs when the currentSlide changes
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, [currentSlide, slides.length]); // Effect runs when the currentSlide or slides length changes
 
-  const goToPrevious = () => {
-    const isFirstSlide = currentSlide === 0;
-    const newIndex = isFirstSlide ? slides.length - 1 : currentSlide - 1;
-    setCurrentSlide(newIndex);
-  };
 
-  const goToNext = () => {
-    const isLastSlide = currentSlide === slides.length - 1;
-    const newIndex = isLastSlide ? 0 : currentSlide + 1;
-    setCurrentSlide(newIndex);
-  };
+  if (!slides || slides.length === 0) {
+    return <div className="h-[600px] flex items-center justify-center bg-gray-200">Loading slides...</div>; // Or some placeholder
+  }
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full h-[600px] overflow-hidden">
       {slides.map((slide, index) => (
-        <div key={index} className={index === currentSlide ? 'block' : 'hidden'}>
-          <div className="relative">
-            <Image
-              src={slide.url || 'https://picsum.photos/1200/600'}
-              alt={`Slide ${index + 1}`}
-              width={1200}
-              height={600}
-              style={{objectFit: 'cover', width: '100%', height: 'auto'}}
-              className="rounded-md animate-fade-in" // Add animate-fade-in for a smooth transition
-            />
-            <div className="absolute top-0 left-0 w-full h-full flex items-center p-8">
-              <div className="bg-black bg-opacity-50 text-white p-6 rounded-md w-1/2">
-                <h2 className="text-3xl font-bold mb-4">{slide.title}</h2>
-                <p className="text-lg">{slide.description}</p>
-              </div>
+        <div
+          key={index}
+          className={cn(
+            "absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ease-in-out",
+            index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          )}
+        >
+          <Image
+            src={slide.url || 'https://picsum.photos/1200/600'}
+            alt={slide.title || `Slide ${index + 1}`}
+            layout="fill"
+            objectFit="cover"
+            priority={index === 0} // Prioritize loading the first image
+            className="rounded-md"
+          />
+          <div className="absolute inset-0 flex items-center p-8 md:p-16">
+            <div className="bg-black bg-opacity-50 text-white p-6 md:p-8 rounded-md max-w-lg">
+              <h2 className="text-2xl md:text-4xl font-bold mb-4">{slide.title}</h2>
+              <p className="text-base md:text-lg">{slide.description}</p>
             </div>
           </div>
         </div>
       ))}
-      <div className="absolute bottom-4 right-4 flex">
+      <div className="absolute bottom-4 right-4 flex z-20">
         {slides.map((_, index) => (
           <button
             key={index}
-            className={`rounded-full w-3 h-3 mx-1 ${currentSlide === index ? 'bg-primary' : 'bg-gray-300'}`}
+            aria-label={`Go to slide ${index + 1}`}
+            className={`rounded-full w-3 h-3 mx-1 transition-colors duration-300 ${currentSlide === index ? 'bg-primary' : 'bg-gray-300 hover:bg-gray-400'}`}
             onClick={() => setCurrentSlide(index)}
           />
         ))}
@@ -234,26 +250,29 @@ const Slider = ({slides}: {slides: any[]}) => {
   );
 };
 
+
 const AboutUsSection = ({title, description, imageUrl}: {title: string, description: string, imageUrl: string}) => {
   return (
     <section className="mt-20 px-8 md:px-24 animate-fade-in">
-      <h2 className="text-3xl font-semibold mb-8 text-center">About Us</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-          <Image
-            src={imageUrl}
-            alt="About Us"
-            width={600}
-            height={400}
-            className="rounded-md shadow-md transition-transform duration-300 hover:scale-105"
-          />
-        </div>
-        <div className="flex flex-col justify-center">
-          <h3 className="text-2xl font-semibold mb-4">{title}</h3>
-          <p className="text-gray-600 mb-6">{description}</p>
-          <Link href="/about" className="text-primary hover:underline">
-            Read More
-          </Link>
+      <div className="container mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="order-2 md:order-1">
+            <h2 className="text-3xl font-semibold mb-4">{title}</h2>
+            <p className="text-gray-600 mb-6">{description}</p>
+            <Link href="/about" className="inline-block bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 transition-colors">
+              Read More
+            </Link>
+          </div>
+          <div className="order-1 md:order-2 flex justify-center md:justify-end">
+            <Image
+              src={imageUrl}
+              alt="About Us"
+              width={500} // Adjust size as needed
+              height={350} // Adjust size as needed
+              className="rounded-md shadow-lg transition-transform duration-300 hover:scale-105"
+              style={{ objectFit: 'cover' }}
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -262,23 +281,17 @@ const AboutUsSection = ({title, description, imageUrl}: {title: string, descript
 
 
 export default function Home() {
-    const services = [
-        {
-            title: "Web Development",
-            description: "Cutting-edge web solutions tailored to your unique business needs.",
-            icon: Code
-        },
-        {
-            title: "Digital Marketing",
-            description: "Elevate your brand with our innovative digital marketing strategies.",
-            icon: TrendingUp
-        },
-        {
-            title: "SEO Optimization",
-            description: "Drive organic growth and enhance your online visibility.",
-            icon: Search
-        }
+    // Updated services array
+    const services: Service[] = [
+      { title: "Branding", description: "Crafting unique brand identities that resonate.", icon: Megaphone },
+      { title: "Web Development", description: "Building responsive and high-performing websites.", icon: Code },
+      { title: "Digital Marketing", description: "Driving growth with targeted online strategies.", icon: TrendingUp },
+      { title: "Content Marketing", description: "Creating valuable content to engage your audience.", icon: PenTool },
+      { title: "Design Services", description: "Delivering visually stunning and user-friendly designs.", icon: Palette },
+      { title: "SEO", description: "Optimizing your online presence for search engines.", icon: Search },
+      { title: "Social Media Marketing", description: "Engaging communities and building brand loyalty.", icon: Users },
     ];
+
 
     const testimonials = [
         {
@@ -292,6 +305,12 @@ export default function Home() {
             title: "Marketing Director, Beta Co",
             testimonial: "We've seen a significant increase in engagement thanks to Irismorphe's strategies.",
             imageUrl: "https://picsum.photos/id/238/48/48"
+        },
+         {
+            name: "Alex Green",
+            title: "Founder, Startup Z",
+            testimonial: "The team at Irismorphe is creative, responsive, and delivered beyond expectations.",
+            imageUrl: "https://picsum.photos/id/239/48/48"
         }
     ];
 
@@ -317,31 +336,31 @@ export default function Home() {
     ];
 
     const slides = [
-        { url: "https://picsum.photos/1200/600", title: "Welcome to IrisMorphe", description: "Your partner in digital success" },
-        { url: "https://picsum.photos/1201/600", title: "Innovative Solutions", description: "We provide innovative solutions to help your business thrive in the digital age." },
-        { url: "https://picsum.photos/1202/600", title: "Expert Team", description: "Meet our team of experts dedicated to delivering exceptional digital solutions." },
-        { url: "https://picsum.photos/1203/600", title: "Cutting-Edge Technology", description: "We utilize the latest technologies to provide you with the best possible results." },
-        { url: "https://picsum.photos/1204/600", title: "Customer Satisfaction", description: "Your satisfaction is our top priority. We strive to exceed your expectations." }
+        { url: "https://picsum.photos/1200/600?random=1", title: "Welcome to IrisMorphe", description: "Your partner in digital success. We create impactful digital experiences." },
+        { url: "https://picsum.photos/1200/600?random=2", title: "Innovative Solutions", description: "We provide cutting-edge solutions to help your business thrive in the digital age." },
+        { url: "https://picsum.photos/1200/600?random=3", title: "Expert Team", description: "Meet our passionate team dedicated to delivering exceptional digital results." },
+        { url: "https://picsum.photos/1200/600?random=4", title: "Data-Driven Strategies", description: "Leveraging insights to optimize performance and achieve measurable results." },
+        { url: "https://picsum.photos/1200/600?random=5", title: "Client-Centric Approach", description: "Your satisfaction is our top priority. We build lasting partnerships." }
     ];
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <main className="flex flex-col items-center justify-center w-full flex-1 text-center">
+    <div className="flex flex-col min-h-screen">
+      <main className="flex-grow">
         <section className="relative w-full text-center animate-fade-in">
-          {slides && <Slider slides={slides} />}
+          <HeroSlider slides={slides} />
         </section>
 
         <AboutUsSection
           title="About IrisMorphe"
-          description="We are a team of experts dedicated to delivering exceptional digital solutions. Learn more about our story and values."
-          imageUrl="https://picsum.photos/id/1015/600/400"
+          description="We are a dynamic digital agency passionate about helping businesses succeed online. From innovative web design to strategic marketing, we craft solutions that drive growth and engagement. Discover our story and the values that guide us."
+          imageUrl="https://picsum.photos/id/1015/500/350" // Slightly adjusted size
         />
 
-        {services && <ServicesSection services={services} />}
+        <ServicesSection services={services} />
 
-        {stats && <StatsSection stats={stats} />}
+        <StatsSection stats={stats} />
 
-        {testimonials && <TestimonialsSection testimonials={testimonials} />}
+        <TestimonialsSection testimonials={testimonials} />
       </main>
     </div>
   );
