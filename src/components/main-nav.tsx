@@ -55,12 +55,15 @@ export function MainNav() {
 
   return (
     <div className="border-b">
+      {/* Updated container to use justify-between for overall layout */}
       <div className="container flex h-16 items-center justify-between py-4">
-        {/* Removed mr-2 to adjust logo alignment */}
+        {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
           <span className="font-bold text-xl font-serif">IrisMorphe</span>
         </Link>
-        <div className="hidden md:flex flex-grow justify-center"> {/* Added flex-grow and justify-center */}
+
+        {/* Desktop Navigation - Centered */}
+        <div className="hidden md:flex flex-grow justify-center">
           <nav className="flex items-center space-x-6 text-sm font-medium">
             {siteConfig.mainNav.map((item) => (
               <Link
@@ -68,7 +71,7 @@ export function MainNav() {
                 href={item.href}
                 className={cn(
                   'transition-colors hover:text-foreground/80',
-                  item.href === pathname ? 'text-foreground/80' : 'text-muted-foreground'
+                  item.href === pathname ? 'text-foreground' : 'text-muted-foreground' // Use foreground for active link
                 )}
               >
                 {item.title}
@@ -76,35 +79,36 @@ export function MainNav() {
             ))}
           </nav>
         </div>
-        <div className="flex items-center space-x-2"> {/* Wrap toggles in a div */}
+
+        {/* Right side elements (Theme Toggle and Mobile Menu Trigger) */}
+        <div className="flex items-center space-x-2">
           <ThemeToggle />
+          {/* Mobile Menu Trigger */}
           <Sheet>
             <SheetTrigger asChild className="md:hidden">
               <Button variant="ghost" size="sm">
                 <Menu className="h-4 w-4" />
+                <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="sm:max-w-sm">
-              <div className="grid gap-4 py-4">
-                <Link href="/" className="flex items-center space-x-2"> {/* Adjusted margin here if needed */}
+              <nav className="grid gap-4 py-4">
+                <Link href="/" className="flex items-center space-x-2 mb-4">
                   <span className="font-bold text-xl font-serif">IrisMorphe</span>
                 </Link>
-                <div className="grid gap-2">
-                  {siteConfig.mainNav.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={cn(
-                        'text-lg font-medium transition-colors hover:text-foreground/80',
-                        item.href === pathname ? 'text-foreground/80' : 'text-muted-foreground'
-                      )}
-                    >
-                      {item.title}
-                    </Link>
-                  ))}
-                  {/* Removed ThemeToggle from mobile sheet content if not desired there */}
-                </div>
-              </div>
+                {siteConfig.mainNav.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      'text-lg font-medium transition-colors hover:text-foreground/80',
+                       item.href === pathname ? 'text-foreground' : 'text-muted-foreground'
+                    )}
+                  >
+                    {item.title}
+                  </Link>
+                ))}
+              </nav>
             </SheetContent>
           </Sheet>
         </div>
@@ -112,4 +116,3 @@ export function MainNav() {
     </div>
   );
 }
-
