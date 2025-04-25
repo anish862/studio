@@ -1,3 +1,4 @@
+
 'use client';
 
 import {Button} from '@/components/ui/button';
@@ -55,10 +56,11 @@ export function MainNav() {
   return (
     <div className="border-b">
       <div className="container flex h-16 items-center justify-between py-4">
-        <Link href="/" className="mr-6 flex items-center space-x-2">
+        {/* Reduced right margin (mr-2) to move the logo slightly right */}
+        <Link href="/" className="mr-2 flex items-center space-x-2">
           <span className="font-bold text-xl font-serif">IrisMorphe</span>
         </Link>
-        <div className="hidden md:flex">
+        <div className="hidden md:flex flex-grow justify-center"> {/* Added flex-grow and justify-center */}
           <nav className="flex items-center space-x-6 text-sm font-medium">
             {siteConfig.mainNav.map((item) => (
               <Link
@@ -74,38 +76,39 @@ export function MainNav() {
             ))}
           </nav>
         </div>
-        <Sheet>
-          <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="sm">
-              <Menu className="h-4 w-4" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="sm:max-w-sm">
-            <div className="grid gap-4 py-4">
-              <Link href="/" className="mr-6 flex items-center space-x-2">
-                <span className="font-bold text-xl font-serif">IrisMorphe</span>
-              </Link>
-              <div className="grid gap-2">
-                {siteConfig.mainNav.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn(
-                      'text-lg font-medium transition-colors hover:text-foreground/80',
-                      item.href === pathname ? 'text-foreground/80' : 'text-muted-foreground'
-                    )}
-                  >
-                    {item.title}
-                  </Link>
-                ))}
-                <ThemeToggle />
+        <div className="flex items-center space-x-2"> {/* Wrap toggles in a div */}
+          <ThemeToggle />
+          <Sheet>
+            <SheetTrigger asChild className="md:hidden">
+              <Button variant="ghost" size="sm">
+                <Menu className="h-4 w-4" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="sm:max-w-sm">
+              <div className="grid gap-4 py-4">
+                <Link href="/" className="mr-6 flex items-center space-x-2">
+                  <span className="font-bold text-xl font-serif">IrisMorphe</span>
+                </Link>
+                <div className="grid gap-2">
+                  {siteConfig.mainNav.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={cn(
+                        'text-lg font-medium transition-colors hover:text-foreground/80',
+                        item.href === pathname ? 'text-foreground/80' : 'text-muted-foreground'
+                      )}
+                    >
+                      {item.title}
+                    </Link>
+                  ))}
+                  {/* Removed ThemeToggle from mobile sheet content if not desired there */}
+                </div>
               </div>
-            </div>
-          </SheetContent>
-        </Sheet>
-        <ThemeToggle />
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </div>
   );
 }
-
