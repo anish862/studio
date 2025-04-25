@@ -27,182 +27,35 @@ interface Service {
   icon: React.ElementType; // Use React.ElementType for component types
 }
 
-const ServicesSection = ({services}: {services: Service[]}) => {
-  const [isLoading, setIsLoading] = useState(true);
+// Define component structure for Hero Slider slide
+interface Slide {
+  url: string;
+  title: string;
+  description: string;
+  buttonText?: string;
+  buttonLink?: string;
+}
 
-  useEffect(() => {
-    // Simulate loading time
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-  }, []);
+// Define component structure for Testimonial
+interface Testimonial {
+  name: string;
+  title: string;
+  testimonial: string;
+  imageUrl: string;
+}
 
-  return (
-    <section className="mt-16 px-8 md:px-24 animate-fade-in">
-      <h2 className="text-3xl font-semibold mb-8 text-center">Our Expertise</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        {services.map((service, index) => (
-           <Card key={index} className="flex flex-col items-center text-center p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-            <CardHeader className="p-0 mb-4">
-              {isLoading ? (
-                 <Skeleton className="h-10 w-10 rounded-full mx-auto" />
-               ) : (
-                <service.icon className="h-10 w-10 text-primary mx-auto" />
-               )}
-            </CardHeader>
-            <CardContent className="p-0">
-              <CardTitle className="text-xl font-semibold mb-2">
-                {isLoading ? <Skeleton className="h-6 w-32 mx-auto" /> : service.title}
-              </CardTitle>
-              <CardDescription className="text-foreground/80"> {/* Updated text color */}
-                {isLoading ? (
-                  <>
-                    <Skeleton className="h-4 w-full mb-1 mx-auto" />
-                    <Skeleton className="h-4 w-5/6 mx-auto" />
-                  </>
-                 ) : (
-                  service.description
-                )}
-              </CardDescription>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </section>
-  );
-};
+// Define component structure for Stat
+interface Stat {
+  title: string;
+  value: string;
+  trend: 'up' | 'down';
+  percentageChange: string;
+}
 
 
-const TestimonialsSection = ({testimonials}: {testimonials: any[]}) => {
-  const [isLoading, setIsLoading] = useState(true);
+// --- Component Definitions ---
 
-  useEffect(() => {
-    // Simulate loading time
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
-
-  return (
-    <section className="mt-20 px-8 md:px-24 animate-fade-in">
-      <h2 className="text-3xl font-semibold mb-8 text-center">
-        What Our Clients Say
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {testimonials.map((testimonial) => (
-          <Card key={testimonial.name} className="relative">
-            <CardHeader>
-              <div className="flex items-center mb-4">
-                {isLoading ? (
-                  <Skeleton className="h-12 w-12 rounded-full mr-4" />
-                ) : (
-                  <Image
-                    src={testimonial.imageUrl}
-                    alt={testimonial.name}
-                    width={48}
-                    height={48}
-                    className="rounded-full mr-4"
-                  />
-                )}
-                <div>
-                  {isLoading ? (
-                    <>
-                      <Skeleton className="h-4 w-32 mb-1" />
-                      <Skeleton className="h-3 w-24" />
-                    </>
-                  ) : (
-                    <>
-                      <CardTitle className="text-lg">{testimonial.name}</CardTitle>
-                      <CardDescription className="text-muted-foreground"> {/* Updated text color */}
-                        {testimonial.title}
-                      </CardDescription>
-                    </>
-                  )}
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              {isLoading ? (
-                <>
-                  <Skeleton className="h-4 w-full mb-2" />
-                  <Skeleton className="h-4 w-5/6 mb-2" />
-                  <Skeleton className="h-4 w-3/4" />
-                </>
-              ) : (
-                <p className="text-foreground/80">{testimonial.testimonial}</p> {/* Updated text color */}
-              )}
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </section>
-  );
-};
-
-
-const StatsSection = ({stats}: {stats: any[]}) => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate loading time
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1200);
-  }, []);
-
-  return (
-    <section className="mt-20 px-8 md:px-24 animate-fade-in">
-      <h2 className="text-3xl font-semibold mb-8 text-center">
-        Key Performance Indicators
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {stats.map((stat) => (
-          <Card key={stat.title} className="relative">
-            <CardHeader>
-              <CardTitle className="text-xl flex items-center">
-                {isLoading ? (
-                  <Skeleton className="h-6 w-6 mr-2 rounded-full" />
-                ) : (
-                  // Replace hardcoded icons with dynamic icons based on stat type
-                  (() => {
-                    if (stat.title === 'Website Traffic') {
-                      return <LineChart className="mr-2 h-6 w-6 text-primary" />;
-                    } else if (stat.title === 'Conversion Rate') {
-                      return <BarChart className="mr-2 h-6 w-6 text-primary" />;
-                    } else if (stat.title === 'Customer Engagement') {
-                      return <PieChart className="mr-2 h-6 w-6 text-primary" />;
-                    }
-                    return null; // Or a default icon
-                  })()
-                )}
-                {isLoading ? <Skeleton className="h-6 w-24" /> : stat.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {isLoading ? (
-                <Skeleton className="h-8 w-32" />
-              ) : (
-                <div className="text-2xl font-bold">{stat.value}</div>
-              )}
-              {isLoading ? (
-                <Skeleton className="h-4 w-20" />
-              ) : (
-                <div className="text-sm text-muted-foreground mt-2"> {/* Updated text color */}
-                  <span className={stat.trend === 'up' ? 'text-green-500' : 'text-red-500'}>
-                    {stat.trend === 'up' ? '▲' : '▼'} {stat.percentageChange}
-                  </span>{' '}
-                  vs. last month
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </section>
-  );
-};
-
-const HeroSlider = ({slides}: {slides: any[]}) => {
+const HeroSlider = ({slides}: {slides: Slide[]}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const timerRef = useRef<number | null>(null); // Use a ref to hold the timer ID
 
@@ -285,7 +138,6 @@ const HeroSlider = ({slides}: {slides: any[]}) => {
   );
 };
 
-
 const AboutUsSection = ({title, description, imageUrl, buttonText = 'Read More'}: {title: string, description: string, imageUrl: string, buttonText?: string}) => {
   return (
     <section className="mt-20 px-8 md:px-24 animate-fade-in">
@@ -315,6 +167,185 @@ const AboutUsSection = ({title, description, imageUrl, buttonText = 'Read More'}
 };
 
 
+const ServicesSection = ({services}: {services: Service[]}) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+  }, []);
+
+  return (
+    <section className="mt-16 px-8 md:px-24 animate-fade-in">
+      <h2 className="text-3xl font-semibold mb-8 text-center">Our Expertise</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {services.map((service, index) => (
+           <Card key={index} className="flex flex-col items-center text-center p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+            <CardHeader className="p-0 mb-4">
+              {isLoading ? (
+                 <Skeleton className="h-10 w-10 rounded-full mx-auto" />
+               ) : (
+                <service.icon className="h-10 w-10 text-primary mx-auto" />
+               )}
+            </CardHeader>
+            <CardContent className="p-0">
+              <CardTitle className="text-xl font-semibold mb-2">
+                {isLoading ? <Skeleton className="h-6 w-32 mx-auto" /> : service.title}
+              </CardTitle>
+              <CardDescription className="text-foreground/80"> {/* Updated text color */}
+                {isLoading ? (
+                  <>
+                    <Skeleton className="h-4 w-full mb-1 mx-auto" />
+                    <Skeleton className="h-4 w-5/6 mx-auto" />
+                  </>
+                 ) : (
+                  service.description
+                )}
+              </CardDescription>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+
+const TestimonialsSection = ({testimonials}: {testimonials: Testimonial[]}) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  // Ensure the return statement correctly wraps the JSX
+  return (
+    <section className="mt-20 px-8 md:px-24 animate-fade-in">
+      <h2 className="text-3xl font-semibold mb-8 text-center">
+        What Our Clients Say
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {testimonials.map((testimonial) => (
+          <Card key={testimonial.name} className="relative">
+            <CardHeader>
+              <div className="flex items-center mb-4">
+                {isLoading ? (
+                  <Skeleton className="h-12 w-12 rounded-full mr-4" />
+                ) : (
+                  <Image
+                    src={testimonial.imageUrl}
+                    alt={testimonial.name}
+                    width={48}
+                    height={48}
+                    className="rounded-full mr-4"
+                  />
+                )}
+                <div>
+                  {isLoading ? (
+                    <>
+                      <Skeleton className="h-4 w-32 mb-1" />
+                      <Skeleton className="h-3 w-24" />
+                    </>
+                  ) : (
+                    <>
+                      <CardTitle className="text-lg">{testimonial.name}</CardTitle>
+                      <CardDescription className="text-muted-foreground"> {/* Updated text color */}
+                        {testimonial.title}
+                      </CardDescription>
+                    </>
+                  )}
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {isLoading ? (
+                <>
+                  <Skeleton className="h-4 w-full mb-2" />
+                  <Skeleton className="h-4 w-5/6 mb-2" />
+                  <Skeleton className="h-4 w-3/4" />
+                </>
+              ) : (
+                <p className="text-foreground/80">{testimonial.testimonial}</p> {/* Updated text color */}
+              )}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+
+const StatsSection = ({stats}: {stats: Stat[]}) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1200);
+  }, []);
+
+  return (
+    <section className="mt-20 px-8 md:px-24 animate-fade-in">
+      <h2 className="text-3xl font-semibold mb-8 text-center">
+        Key Performance Indicators
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {stats.map((stat) => (
+          <Card key={stat.title} className="relative">
+            <CardHeader>
+              <CardTitle className="text-xl flex items-center">
+                {isLoading ? (
+                  <Skeleton className="h-6 w-6 mr-2 rounded-full" />
+                ) : (
+                  // Replace hardcoded icons with dynamic icons based on stat type
+                  (() => {
+                    if (stat.title === 'Website Traffic') {
+                      return <LineChart className="mr-2 h-6 w-6 text-primary" />;
+                    } else if (stat.title === 'Conversion Rate') {
+                      return <BarChart className="mr-2 h-6 w-6 text-primary" />;
+                    } else if (stat.title === 'Customer Engagement') {
+                      return <PieChart className="mr-2 h-6 w-6 text-primary" />;
+                    }
+                    return null; // Or a default icon
+                  })()
+                )}
+                {isLoading ? <Skeleton className="h-6 w-24" /> : stat.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {isLoading ? (
+                <Skeleton className="h-8 w-32" />
+              ) : (
+                <div className="text-2xl font-bold">{stat.value}</div>
+              )}
+              {isLoading ? (
+                <Skeleton className="h-4 w-20" />
+              ) : (
+                <div className="text-sm text-muted-foreground mt-2"> {/* Updated text color */}
+                  <span className={stat.trend === 'up' ? 'text-green-500' : 'text-red-500'}>
+                    {stat.trend === 'up' ? '▲' : '▼'} {stat.percentageChange}
+                  </span>{' '}
+                  vs. last month
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+
+// --- Home Component ---
+
 export default function Home() {
     const services: Service[] = [
       { title: "Search Engine Optimization (SEO)", description: "Improving website visibility on search engines through organic methods.", icon: Search },
@@ -326,7 +357,7 @@ export default function Home() {
       { title: "Mobile App Development", description: "Creating apps to engage users and expand digital reach.", icon: Smartphone },
     ];
 
-    const testimonials = [
+    const testimonials: Testimonial[] = [
         {
             name: "John Doe",
             title: "CEO, Acme Corp",
@@ -347,7 +378,7 @@ export default function Home() {
         }
     ];
 
-    const stats = [
+    const stats: Stat[] = [
         {
             title: "Website Traffic",
             value: "150%",
@@ -369,7 +400,7 @@ export default function Home() {
     ];
 
     // Updated slides with potentially more relevant image IDs and button details
-    const slides = [
+    const slides: Slide[] = [
         { url: "https://picsum.photos/seed/seo/1200/600", title: "Organic Growth Experts", description: "Boost your website's visibility and attract more traffic using tried-and-true SEO techniques.", buttonText: "Learn SEO", buttonLink: "/services#seo" },
         { url: "https://picsum.photos/seed/social/1200/600", title: "Social Buzz Creators", description: "Ignite engagement and build relationships on social media with tailored content strategies.", buttonText: "Explore SMM", buttonLink: "/services#smm" },
         { url: "https://picsum.photos/seed/content/1200/600", title: "Storytelling Masters", description: "Craft compelling blogs, videos, and infographics that keep your audience coming back for more.", buttonText: "See Content", buttonLink: "/services#content" },
