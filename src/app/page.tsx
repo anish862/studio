@@ -34,18 +34,42 @@ interface Service {
 }
 
 const ServicesSection = ({services}: {services: Service[]}) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+  }, []);
+
   return (
     <section className="mt-16 px-8 md:px-24 animate-fade-in">
       <h2 className="text-3xl font-semibold mb-8 text-center">Our Expertise</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {services.map((service, index) => (
-          <Card key={index} className="flex flex-col items-center text-center p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+           <Card key={index} className="flex flex-col items-center text-center p-6 bg-secondary rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
             <CardHeader className="p-0 mb-4">
-              <service.icon className="h-10 w-10 text-primary mx-auto" />
+              {isLoading ? (
+                 <Skeleton className="h-10 w-10 rounded-full mx-auto" />
+               ) : (
+                <service.icon className="h-10 w-10 text-primary mx-auto" />
+               )}
             </CardHeader>
             <CardContent className="p-0">
-              <CardTitle className="text-xl font-semibold mb-2">{service.title}</CardTitle>
-              <CardDescription className="text-gray-600">{service.description}</CardDescription>
+              <CardTitle className="text-xl font-semibold mb-2">
+                {isLoading ? <Skeleton className="h-6 w-32 mx-auto" /> : service.title}
+              </CardTitle>
+              <CardDescription className="text-gray-600">
+                {isLoading ? (
+                  <>
+                    <Skeleton className="h-4 w-full mb-1 mx-auto" />
+                    <Skeleton className="h-4 w-5/6 mx-auto" />
+                  </>
+                 ) : (
+                  service.description
+                )}
+              </CardDescription>
             </CardContent>
           </Card>
         ))}
@@ -258,7 +282,7 @@ const HeroSlider = ({slides}: {slides: any[]}) => {
 };
 
 
-const AboutUsSection = ({title, description, imageUrl}: {title: string, description: string, imageUrl: string}) => {
+const AboutUsSection = ({title, description, imageUrl, buttonText = 'Read More'}: {title: string, description: string, imageUrl: string, buttonText?: string}) => {
   return (
     <section className="mt-20 px-8 md:px-24 animate-fade-in">
       <div className="container mx-auto">
@@ -267,7 +291,7 @@ const AboutUsSection = ({title, description, imageUrl}: {title: string, descript
             <h2 className="text-3xl font-semibold mb-4">{title}</h2>
             <p className="text-gray-600 mb-6">{description}</p>
             <Link href="/about" className="inline-block bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 transition-colors">
-              Read More
+              {buttonText}
             </Link>
           </div>
           <div className="order-1 md:order-2 flex justify-center md:justify-end">
@@ -359,8 +383,9 @@ export default function Home() {
 
         <AboutUsSection
           title="About IrisMorphe"
-          description="We are a dynamic digital agency passionate about helping businesses succeed online. From innovative web design to strategic marketing, we craft solutions that drive growth and engagement. Discover our story and the values that guide us."
+          description="Welcome to IrisMorphe, your trusted partner in digital marketing excellence. We specialize in transforming businesses with our tailored services, including SEO, PPC, social media management, content creation, and web design. With a passion for innovation and proven strategies, we help brands grow, connect, and thrive in the digital landscape. Our commitment to creativity and measurable results ensures your success online. Explore the full spectrum of our services and let us take your business to the next level."
           imageUrl="https://picsum.photos/id/1015/500/350" // Slightly adjusted size
+          buttonText="Discover More"
         />
 
         <ServicesSection services={services} />
