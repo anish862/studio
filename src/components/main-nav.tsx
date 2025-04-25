@@ -7,6 +7,7 @@ import {Menu} from 'lucide-react';
 import {usePathname} from 'next/navigation';
 import Link from 'next/link';
 import {cn} from '@/lib/utils';
+import {ThemeToggle} from '@/components/theme-toggle';
 
 const siteConfig = {
   name: 'IrisMorphe',
@@ -97,10 +98,12 @@ export function MainNav() {
                     {item.title}
                   </Link>
                 ))}
+                <ThemeToggle />
               </div>
             </div>
           </SheetContent>
         </Sheet>
+        <ThemeToggle />
       </div>
     </div>
   );
