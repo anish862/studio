@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -18,6 +19,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import {Skeleton} from '@/components/ui/skeleton';
 import {cn} from '@/lib/utils';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 // Define the structure for a service item
 interface Service {
@@ -50,6 +52,7 @@ interface Stat {
   trend: 'up' | 'down';
   percentageChange: string;
 }
+
 
 
 // --- Component Definitions ---
@@ -230,7 +233,7 @@ const TestimonialsSection = ({testimonials}: {testimonials: Testimonial[]}) => {
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {testimonials.map((testimonial) => (
-          
+
             <Card key={testimonial.name} className="relative">
               <CardHeader>
                 <div className="flex items-center mb-4">
@@ -274,7 +277,7 @@ const TestimonialsSection = ({testimonials}: {testimonials: Testimonial[]}) => {
                 )}
               </CardContent>
             </Card>
-          
+
         ))}
       </div>
     </div>
@@ -345,6 +348,7 @@ const StatsSection = ({stats}: {stats: Stat[]}) => {
 };
 
 
+
 // --- Home Component ---
 
 export default function Home() {
@@ -410,8 +414,8 @@ export default function Home() {
     ];
 
   return (
-    
-      <main className="flex-grow">
+    <>
+      <main className="flex-grow pt-16"> {/* Added padding-top to prevent content overlap with sticky nav */}
         {/* Hero Slider section takes full width */}
         <div className="relative w-full animate-fade-in">
           <HeroSlider slides={slides} />
@@ -431,10 +435,10 @@ export default function Home() {
           <StatsSection stats={stats} />
 
           <TestimonialsSection testimonials={testimonials} />
-          
-          
+
+
         </div>
       </main>
-    
+    </>
   );
 }

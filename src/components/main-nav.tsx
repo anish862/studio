@@ -47,14 +47,29 @@ const siteConfig = {
 
 export function MainNav() {
   const [isMounted, setIsMounted] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
     setIsMounted(true);
+
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 100); // Adjust scroll threshold as needed
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
-    <div className="border-b w-full">
+    <div
+      className={cn(
+        "border-b w-full transition-all duration-300",
+        isSticky ? "fixed top-0 left-0 z-50 bg-background/95 backdrop-blur-sm shadow-md" : "relative bg-background"
+      )}
+    >
       {/* Container limits the width and centers content */}
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
@@ -82,7 +97,7 @@ export function MainNav() {
 
         {/* Right side elements (Theme Toggle and Mobile Menu Trigger) */}
         <div className="flex items-center space-x-2">
-          <ThemeToggle />
+          {isMounted && <ThemeToggle />} {/* Render ThemeToggle only when mounted */}
           {/* Mobile Menu Trigger */}
           <Sheet>
             <SheetTrigger asChild className="md:hidden">
