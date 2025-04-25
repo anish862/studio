@@ -7,8 +7,9 @@ import Footer from '@/components/footer';
 import {ThemeProvider} from "@/app/theme-provider";
 
 export const metadata: Metadata = {
-  title: 'IrisMorphe',
-  description: 'Your partner in digital success.',
+  title: 'AgencyFlow - Your Partner in Digital Success | Digital Agency',
+  description: 'AgencyFlow is a leading digital agency providing expert services in SEO, Web Development, Social Media Marketing, and Content Creation to help your business thrive online.',
+  keywords: ['digital agency', 'web design', 'web development', 'SEO', 'social media marketing', 'content marketing', 'digital marketing', 'online marketing', 'AgencyFlow'],
 };
 
 const geistSans = Geist({
@@ -41,5 +42,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-
