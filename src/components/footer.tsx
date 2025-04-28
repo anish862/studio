@@ -72,7 +72,7 @@ const Footer = () => {
 
           {/* Logo and Description */}
           <div>
-            <h3 className="text-2xl font-semibold mb-4">AgencyFlow</h3>
+            <h3 className="text-2xl font-semibold mb-4">IrisMorphe</h3>
             <p className="text-gray-600">
               Your partner in digital success. We provide innovative solutions to help your business thrive in the digital age.
             </p>
@@ -80,7 +80,7 @@ const Footer = () => {
         </div>
         <div className="mt-12 text-center">
           <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} AgencyFlow. All Rights Reserved.
+            © {new Date().getFullYear()} IrisMorphe. All Rights Reserved.
           </p>
         </div>
       </div>

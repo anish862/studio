@@ -11,7 +11,7 @@ import {cn} from '@/lib/utils';
 import {ThemeToggle} from '@/components/theme-toggle';
 
 const siteConfig = {
-  name: 'AgencyFlow', // Updated site name
+  name: 'IrisMorphe', // Updated site name
   description: 'Your partner in digital success.',
   mainNav: [
     {

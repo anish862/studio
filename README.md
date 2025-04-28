@@ -1,4 +1,4 @@
-# Firebase Studio
+# IrisMorphe
 
 This is a NextJS starter in Firebase Studio.
 
