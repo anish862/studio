@@ -1,0 +1,58 @@
+# .htaccess for Next.js on Apache
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Rewrite /_next/static requests to the static directory
+  RewriteRule ^_next/static/(.*)$ static/$1 [L]
+
+  # Rewrite /static requests to the static directory
+  RewriteRule ^static/(.*)$ static/$1 [L]
+
+  # Handle API routes by proxying to the Node.js server
+  # Adjust the port (e.g., 3000) if your Node.js app runs on a different one
+  RewriteRule ^api/(.*)$ http://127.0.0.1:3000/api/$1 [P,L]
+
+  # Handle all other requests by proxying to the Node.js server
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]
+</IfModule>
+
+# Optional: Improve caching for static assets
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresDefault "access plus 1 month"
+</IfModule>
+
+# Optional: Enable compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+</IfModule>
+
+# Deny access to sensitive files
+<Files ".env*">
+  Require all denied
+</Files>
+<Files "next.config.js">
+  Require all denied
+</Files>
+<Files "package.json">
+  Require all denied
+</Files>
+<Files "package-lock.json">
+  Require all denied
+</Files>
+<Files "tsconfig.json">
+  Require all denied
+</Files>
+<Files "server.js">
+  Require all denied
+</Files>
