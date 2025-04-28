@@ -38,19 +38,19 @@ export default function Home() {
         {
             name: "John Doe",
             title: "CEO, Acme Corp",
-            testimonial: "Irismorphe has transformed our online presence. Their expertise is unmatched!",
+            testimonial: "AgencyFlow has transformed our online presence. Their expertise is unmatched!",
             imageUrl: "https://picsum.photos/id/237/48/48"
         },
         {
             name: "Jane Smith",
             title: "Marketing Director, Beta Co",
-            testimonial: "We've seen a significant increase in engagement thanks to Irismorphe's strategies.",
+            testimonial: "We've seen a significant increase in engagement thanks to AgencyFlow's strategies.",
             imageUrl: "https://picsum.photos/id/238/48/48"
         },
          {
             name: "Alex Green",
             title: "Founder, Startup Z",
-            testimonial: "The team at Irismorphe is creative, responsive, and delivered beyond expectations.",
+            testimonial: "The team at AgencyFlow is creative, responsive, and delivered beyond expectations.",
             imageUrl: "https://picsum.photos/id/239/48/48"
         }
     ];
@@ -99,8 +99,8 @@ export default function Home() {
         {/* Other sections remain containerized */}
         <div className="container mx-auto">
           <AboutUsSection
-            title="About IrisMorphe"
-            description="Welcome to IrisMorphe, your trusted partner in digital marketing excellence. We specialize in transforming businesses with our tailored services, including SEO, PPC, social media management, content creation, and web design. With a passion for innovation and proven strategies, we help brands grow, connect, and thrive in the digital landscape. Our commitment to creativity and measurable results ensures your success online. Explore the full spectrum of our services and let us take your business to the next level."
+            title="About AgencyFlow"
+            description="Welcome to AgencyFlow, your trusted partner in digital marketing excellence. We specialize in transforming businesses with our tailored services, including SEO, PPC, social media management, content creation, and web design. With a passion for innovation and proven strategies, we help brands grow, connect, and thrive in the digital landscape. Our commitment to creativity and measurable results ensures your success online. Explore the full spectrum of our services and let us take your business to the next level."
             imageUrl="https://picsum.photos/id/1015/500/350" // Slightly adjusted size
             buttonText="Discover More"
           />

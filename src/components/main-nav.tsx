@@ -11,7 +11,7 @@ import {cn} from '@/lib/utils';
 import {ThemeToggle} from '@/components/theme-toggle';
 
 const siteConfig = {
-  name: 'IrisMorphe',
+  name: 'AgencyFlow', // Updated site name
   description: 'Your partner in digital success.',
   mainNav: [
     {
@@ -74,7 +74,7 @@ export function MainNav() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
-          <span className="font-bold text-xl font-serif">IrisMorphe</span>
+          <span className="font-bold text-xl font-serif">{siteConfig.name}</span>
         </Link>
 
         {/* Desktop Navigation - Centered */}
@@ -109,7 +109,7 @@ export function MainNav() {
             <SheetContent side="left" className="sm:max-w-sm">
               <nav className="grid gap-4 py-4">
                 <Link href="/" className="flex items-center space-x-2 mb-4">
-                  <span className="font-bold text-xl font-serif">IrisMorphe</span>
+                  <span className="font-bold text-xl font-serif">{siteConfig.name}</span>
                 </Link>
                 {siteConfig.mainNav.map((item) => (
                   <Link

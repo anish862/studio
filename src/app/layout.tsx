@@ -1,10 +1,11 @@
 import type {Metadata} from 'next';
-import {Geist, Geist_Mono} from 'next/font/google';
+import { Inter } from 'next/font/google' // Using Inter font
 import './globals.css';
 import {Toaster} from '@/components/ui/toaster';
 import {MainNav} from '@/components/main-nav';
 import Footer from '@/components/footer';
 import {ThemeProvider} from "@/app/theme-provider";
+import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
 
 export const metadata: Metadata = {
   title: 'AgencyFlow - Your Partner in Digital Success | Digital Agency',
@@ -12,15 +13,12 @@ export const metadata: Metadata = {
   keywords: ['digital agency', 'web design', 'web development', 'SEO', 'social media marketing', 'content marketing', 'digital marketing', 'online marketing', 'AgencyFlow'],
 };
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+// Setup Inter font
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
 
 export default function RootLayout({
   children,
@@ -29,15 +27,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      {/* Apply Inter font variable */}
+      <body className={`${inter.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          
             <MainNav />
-            {children}
+            {/* Wrap the main content area with ClientOnly */}
+            <ClientOnly>
+              {children}
+            </ClientOnly>
             <Toaster />
-          
+            <Footer />
         </ThemeProvider>
-          <Footer />
       </body>
     </html>
   );
