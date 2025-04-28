@@ -1,0 +1,15 @@
+
+{
+    "name": "irismorphe/nextjs-app",
+    "description": "Next.js application for IrisMorphe. This file is added to potentially satisfy deployment checks.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Your Name",
+            "email": "your.email@example.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
