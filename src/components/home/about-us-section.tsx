@@ -4,15 +4,40 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Skeleton } from '@/components/ui/skeleton'; // Import Skeleton
 
 interface AboutUsSectionProps {
   title: string;
   description: string;
   imageUrl: string;
   buttonText?: string;
+  isLoading?: boolean; // Add isLoading prop
 }
 
-export const AboutUsSection = ({title, description, imageUrl, buttonText = 'Read More'}: AboutUsSectionProps) => {
+export const AboutUsSection = ({title, description, imageUrl, buttonText = 'Read More', isLoading = false}: AboutUsSectionProps) => {
+
+  if (isLoading) {
+      return (
+          <div className="mt-20 px-8 md:px-24 animate-fade-in">
+            <div className="container mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div className="order-2 md:order-1 space-y-4">
+                  <Skeleton className="h-8 w-3/4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-5/6" />
+                  <Skeleton className="h-10 w-32" />
+                </div>
+                <div className="order-1 md:order-2 flex justify-center md:justify-end">
+                  <Skeleton className="h-[350px] w-[500px] rounded-lg" />
+                </div>
+              </div>
+            </div>
+          </div>
+      );
+  }
+
+
   return (
     <div className="mt-20 px-8 md:px-24 animate-fade-in">
       <div className="container mx-auto">
@@ -25,17 +50,24 @@ export const AboutUsSection = ({title, description, imageUrl, buttonText = 'Read
             </Link>
           </div>
           <div className="order-1 md:order-2 flex justify-center md:justify-end">
-            <Image
-              src={imageUrl}
-              alt="About Us"
-              width={500} // Adjust size as needed
-              height={350} // Adjust size as needed
-              className="rounded-lg shadow-lg transition-transform duration-300 hover:scale-105" // Use lg radius
-              style={{ objectFit: 'cover' }}
-            />
+             {imageUrl ? (
+                <Image
+                    src={imageUrl}
+                    alt={title || "About Us"} // Use title as alt text fallback
+                    width={500} // Adjust size as needed
+                    height={350} // Adjust size as needed
+                    className="rounded-lg shadow-lg transition-transform duration-300 hover:scale-105" // Use lg radius
+                    style={{ objectFit: 'cover' }}
+                    unoptimized={imageUrl.includes('picsum.photos')} // Don't optimize placeholders
+                />
+             ) : (
+                 <Skeleton className="h-[350px] w-[500px] rounded-lg" /> // Fallback skeleton if no image URL
+             )}
           </div>
         </div>
       </div>
     </div>
   );
 };
+ 
+    

@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import Image from 'next/image';
 import {Card, CardContent, CardHeader, CardTitle, CardDescription} from '@/components/ui/card';
 import {Skeleton} from '@/components/ui/skeleton';
@@ -14,15 +14,12 @@ export interface Testimonial {
   imageUrl: string;
 }
 
-export const TestimonialsSection = ({testimonials}: {testimonials: Testimonial[]}) => {
-  const [isLoading, setIsLoading] = useState(true);
+interface TestimonialsSectionProps {
+    testimonials: Testimonial[];
+    isLoading?: boolean; // Add isLoading prop
+}
 
-  useEffect(() => {
-    // Simulate loading time
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+export const TestimonialsSection = ({testimonials, isLoading = false}: TestimonialsSectionProps) => {
 
   // Ensure the return statement correctly wraps the JSX
   return (
@@ -31,20 +28,20 @@ export const TestimonialsSection = ({testimonials}: {testimonials: Testimonial[]
         What Our Clients Say
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {testimonials.map((testimonial) => (
-
-            <Card key={testimonial.name} className="relative">
+        {(isLoading ? Array(3).fill(null) : testimonials).map((testimonial, index) => (
+            <Card key={isLoading ? `testimonial-skeleton-${index}` : testimonial.name} className="relative">
               <CardHeader>
                 <div className="flex items-center mb-4">
                   {isLoading ? (
                     <Skeleton className="h-12 w-12 rounded-full mr-4" />
                   ) : (
                     <Image
-                      src={testimonial.imageUrl}
-                      alt={testimonial.name}
+                      src={testimonial.imageUrl || 'https://picsum.photos/48/48'} // Fallback image
+                      alt={testimonial.name || 'Client'}
                       width={48}
                       height={48}
                       className="rounded-full mr-4"
+                      unoptimized={testimonial.imageUrl?.includes('picsum.photos')} // Avoid optimizing placeholders
                     />
                   )}
                   <div>
@@ -76,9 +73,10 @@ export const TestimonialsSection = ({testimonials}: {testimonials: Testimonial[]
                 )}
               </CardContent>
             </Card>
-
         ))}
       </div>
     </div>
   );
 };
+ 
+    
